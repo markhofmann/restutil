@@ -17,16 +17,22 @@ gwt {
 dependencies {
     compile 'com.google.gwt:gwt-user:' + versions.gwt
     compile 'com.github.nmorel.gwtjackson:gwt-jackson:' + versions.gwtJackson
-    compile(project(':restutil:common')) {
+    compile(project(':common')) {
         exclude group: 'javax.validation'
     }
 }
 
 publishing {
     publications {
-        maven(MavenPublication) {
+        mavenJava(MavenPublication) {
             artifactId archivesBaseName
             from components.java
+            artifact sourcesJar
+        }
+    }
+    repositories {
+        maven {
+            url "file:///Users/mark/Dropbox/Public/maven-repo"
         }
     }
 }

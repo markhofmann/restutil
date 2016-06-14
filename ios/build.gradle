@@ -1,7 +1,7 @@
 description = 'IOS specific code of the REST utility'
 
 dependencies {
-    compile project(':restutil:common')
+    compile project(':common')
     compile 'com.google.code.gson:gson:' + versions.gson
     compile 'com.google.guava:guava:' + versions.googleGuava
 
@@ -13,9 +13,15 @@ dependencies {
 
 publishing {
     publications {
-        maven(MavenPublication) {
+        mavenJava(MavenPublication) {
             artifactId archivesBaseName
             from components.java
+            artifact sourcesJar
+        }
+    }
+    repositories {
+        maven {
+            url "file:///Users/mark/Dropbox/Public/maven-repo"
         }
     }
 }

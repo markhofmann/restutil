@@ -26,16 +26,14 @@ apply from: file("versions.gradle")
 // tell spring boot to use 5.1.0 as hibernate version (default is 4.3)
 ext['hibernate.version'] = versions.hibernate
 
-description = 'Best-practice project template for quickly getting started with building modern ' +
-        'and scalable server based apps and restful websites '
+description = 'Cross platform utility for making REST calls'
 
 allprojects {
     apply plugin: 'maven'
     apply plugin: 'maven-publish'
     apply plugin: 'idea'
     version = '0.0.1-SNAPSHOT'
-    group = 'com.hammocks.restutil'
-    description = 'Cross platform utility for making REST calls'
+    group = 'com.rockstar.restutil'
 
 //    publishing {
 //        publications {
@@ -105,7 +103,6 @@ subprojects {
     }
 
     configurations {
-        jpametamodel
         provided
         compile.extendsFrom provided
         // don't use the standard logging from spring-boot (we want log4j2)
@@ -195,19 +192,6 @@ subprojects {
         }
     }
 
-    task generateMetaModel(type: JavaCompile, group: 'build', description: 'metamodel generate') {
-        source = sourceSets.main.java
-        classpath = configurations.compile + configurations.jpametamodel
-        options.compilerArgs = ["-proc:only"]
-        destinationDir = sourceSets.generated.java.srcDirs.iterator().next()
-
-        doFirst {
-            logger.warn("Prepare dictionary structures  " + sourceSets.generated.java.srcDirs)
-            //delete(sourceSets.generated.java.srcDirs)
-            //sourceSets.generated.java.srcDirs.mkdirs()
-        }
-    }
-
     idea {
         module {
             name = archivesBaseName
@@ -224,25 +208,6 @@ subprojects {
     task wrapper(type: Wrapper) {
         distributionUrl = 'https://services.gradle.org/distributions/gradle-2.11-bin.zip'
     }
-}
-
-// stage task required for heroku
-task stage {
-    evaluationDependsOnChildren();
-    dependsOn ':services:sample:server:build'
-    dependsOn ':services:mediaserver:server:build'
-}
-
-def createBuildProperties(sourceSets) {
-    // the environment variables BUILD_NUMBER, BUILD_ID and GIT_BRANCH are set by Jenkins
-    // "tag" is set by the staging and production build
-    // we store them in a build properties file which is loaded during startup
-    def buildProperties = file("${sourceSets.main.output.classesDir}/build.properties")
-    buildProperties << "build.tag=${System.env.tag}\n"
-    buildProperties << "build.version=${version}\n"
-    buildProperties << "build.number=${System.env.BUILD_NUMBER}\n"
-    buildProperties << "build.timestamp=${System.env.BUILD_ID}\n"
-    buildProperties << "build.scmBranch=${System.env.GIT_BRANCH}"
 }
 
 // extra configuration for "Gradle Versions Plugin": filter out release candidates etc.

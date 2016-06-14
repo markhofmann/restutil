@@ -1,0 +1,5 @@
+rootProject.name = 'restutil'
+include  ':common',
+        ':android',
+        ':gwt',
+        ':ios'

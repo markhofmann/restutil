@@ -1,10 +1,10 @@
-package com.sample.restutil.gwt;
+package com.rockstar.restutil.gwt;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsonUtils;
-import com.sample.restutil.common.BaseRestUtil;
-import com.sample.restutil.common.RestRequest;
-import com.sample.restutil.common.RestUtil;
+import com.rockstar.restutil.common.BaseRestUtil;
+import com.rockstar.restutil.common.RestRequest;
+import com.rockstar.restutil.common.RestUtil;
 
 import java.util.logging.Logger;
 

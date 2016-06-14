@@ -4,7 +4,7 @@ sourceCompatibility = versions.androidJava
 targetCompatibility = versions.androidJava
 
 dependencies {
-    compile(project(':restutil:common'))
+    compile(project(':common'))
     provided 'com.google.android:android:' + versions.android
     compile 'com.mcxiaoke.volley:library:1.0.19'
 
@@ -25,9 +25,15 @@ dependencies {
 
 publishing {
     publications {
-        maven(MavenPublication) {
+        mavenJava(MavenPublication) {
             artifactId archivesBaseName
             from components.java
+            artifact sourcesJar
+        }
+    }
+    repositories {
+        maven {
+            url "file:///Users/mark/Dropbox/Public/maven-repo"
         }
     }
 }

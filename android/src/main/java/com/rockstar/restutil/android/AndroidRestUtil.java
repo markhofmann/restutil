@@ -1,4 +1,4 @@
-package com.sample.restutil.android;
+package com.rockstar.restutil.android;
 
 import android.content.Context;
 import android.util.Log;
@@ -7,9 +7,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sample.restutil.common.BaseRestUtil;
-import com.sample.restutil.common.RestCallback;
-import com.sample.restutil.common.RestRequest;
+import com.rockstar.restutil.common.BaseRestUtil;
+import com.rockstar.restutil.common.RestCallback;
+import com.rockstar.restutil.common.RestRequest;
 import org.apache.commons.io.IOUtils;
 
 import java.io.File;

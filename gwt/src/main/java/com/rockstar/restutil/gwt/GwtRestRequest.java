@@ -1,4 +1,4 @@
-package com.sample.restutil.gwt;
+package com.rockstar.restutil.gwt;
 
 import com.google.gwt.http.client.Header;
 import com.google.gwt.http.client.Request;
@@ -8,9 +8,9 @@ import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Window;
-import com.sample.restutil.common.BaseRestRequest;
-import com.sample.restutil.common.RestCallback;
-import com.sample.restutil.common.RestUtil;
+import com.rockstar.restutil.common.BaseRestRequest;
+import com.rockstar.restutil.common.RestCallback;
+import com.rockstar.restutil.common.RestUtil;
 import lombok.val;
 
 import java.util.HashMap;

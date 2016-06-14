@@ -1,4 +1,4 @@
-package com.sample.restutil.android;
+package com.rockstar.restutil.android;
 
 import lombok.Value;
 

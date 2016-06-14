@@ -1,10 +1,10 @@
-package com.sample.restutil.ios;
+package com.rockstar.restutil.ios;
 
 import com.google.gson.Gson;
 import com.google.j2objc.annotations.ObjectiveCName;
-import com.sample.restutil.common.BaseRestUtil;
-import com.sample.restutil.common.RestRequest;
-import com.sample.restutil.common.RestUtil;
+import com.rockstar.restutil.common.BaseRestUtil;
+import com.rockstar.restutil.common.RestRequest;
+import com.rockstar.restutil.common.RestUtil;
 
 /**
  * @author Mark Hofmann (mark@mark-hofmann.de)

@@ -1,4 +1,4 @@
-package com.sample.restutil.android;
+package com.rockstar.restutil.android;
 
 import android.util.Log;
 import com.android.volley.AuthFailureError;

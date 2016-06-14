@@ -1,4 +1,4 @@
-package com.sample.restutil.common;
+package com.rockstar.restutil.common;
 
 import lombok.Getter;
 import lombok.Setter;

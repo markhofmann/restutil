@@ -1,4 +1,4 @@
-package com.sample.restutil.common;
+package com.rockstar.restutil.common;
 
 import com.google.j2objc.annotations.ObjectiveCName;
 import lombok.Getter;

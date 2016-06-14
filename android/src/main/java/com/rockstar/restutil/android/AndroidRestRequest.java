@@ -1,4 +1,4 @@
-package com.sample.restutil.android;
+package com.rockstar.restutil.android;
 
 import android.util.Log;
 import com.android.volley.DefaultRetryPolicy;
@@ -6,9 +6,9 @@ import com.android.volley.NetworkError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.sample.restutil.common.BaseRestRequest;
-import com.sample.restutil.common.RestCallback;
-import com.sample.restutil.common.RestUtil;
+import com.rockstar.restutil.common.BaseRestRequest;
+import com.rockstar.restutil.common.RestCallback;
+import com.rockstar.restutil.common.RestUtil;
 import lombok.val;
 
 import java.io.File;

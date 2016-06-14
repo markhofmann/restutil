@@ -1,0 +1,87 @@
+ext.versions = [
+        java                 : '1.8',
+        // android does not support java 8 yet
+        androidJava          : '1.7',
+
+        android              : '4.1.1.4',
+
+        aspectj              : '1.8.+',
+        aspectjPlugin        : '1.5',
+        andromda             : '3.4',
+        springBoot           : '1.3.3.RELEASE',
+
+        vertx                : '3.2.1',
+        vertxBeans           : '1.2.1',
+        nubes                : '1.2.1',
+
+        hazelcast            : '3.5.3', // same version as used by vertx, latest: 3.6.2
+
+        // hibernate
+
+        hibernate            : '5.1.0.Final', // '4.3.11.Final', // spring-boot does currently not support '5.1.0.Final',
+        postgresql           : '9.4.1208.jre7',
+        h2                   : '1.4.190', // embedded h2 database, for testing only
+
+        javaxValidation      : '1.1.0.Final',
+        hibernateValidator   : '5.2.4.Final',
+        gwtJavaxValidation   : '1.0.0.GA', // gwt supports only 1.0,
+        gwtHibernateValidator: '4.1.0.Final', // gwt supports only 4.1.0,
+
+        c3p0                 : '0.9.1.+',
+
+        log4j                : '2.5',
+        slf4j                : '1.7.21', // required to route non log4j2 logging calls to log4j2 and in gwt
+        lombok               : '1.16.8',
+
+        // spring
+        spring               : '4.2.5.RELEASE',
+        springSecurity       : '4.0.4.RELEASE',
+        springData           : '1.9.4.RELEASE',
+        springDataMongodb    : '1.8.4.RELEASE',
+        springLdap           : '1.3.1.RELEASE',
+
+        // commons.*
+        commonsIO            : '2.5',
+        commonsCollections   : '4.1',
+        commonsLang          : '3.4',
+        commonsCodec         : '1.10',
+        commonsBeanutils     : '1.9.2',
+        commonsCompress      : '1.11',
+        commonsVFS2          : '2.1.1660580.2',
+
+        googleGuava          : '19.0',
+
+        apacheTika           : '1.12',
+        im4java              : '1.4.+',
+        jai                  : '1.1.3',
+
+        jbcrypt              : '0.4.1',
+        jasypt               : '1.9.2',
+        bouncyCastle         : '1.54',
+
+        jedis                : '2.2.1',
+
+        // gson is required by the ios rest implementation
+        gson                 : '2.6.2',
+
+        // jackson is currently used in the backend and in the android client
+        jackson              : '2.7.4',
+
+        gwt                  : '2.7.0',
+        gwtJackson           : '0.12.0',
+
+        elApi                : '3.0.1-b04',
+
+        uuidGenerator        : '3.1.4',
+
+        awsSdk               : '1.10.72',
+        restFB               : '1.22.0',
+
+        // testing
+        junit                : '4.12',
+        mockito              : '1.10.19',
+        powerMock            : '1.6.4',
+
+        // android client testing
+        robolectric          : '3.0'
+]

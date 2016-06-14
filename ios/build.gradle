@@ -1,0 +1,21 @@
+description = 'IOS specific code of the REST utility'
+
+dependencies {
+    compile project(':restutil:common')
+    compile 'com.google.code.gson:gson:' + versions.gson
+    compile 'com.google.guava:guava:' + versions.googleGuava
+
+//    compile 'com.mashape.unirest:unirest-java:1.4.7'
+//    compile 'org.apache.httpcomponents:httpclient:4.5.1'
+
+    testCompile 'junit:junit:4.11'
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            artifactId archivesBaseName
+            from components.java
+        }
+    }
+}

@@ -1,0 +1,17 @@
+description = 'The common code used by all implementations. Compiles to Java + Javascript, transpiles to Objective C'
+
+sourceCompatibility = versions.androidJava
+targetCompatibility = versions.androidJava
+
+dependencies {
+    compile 'com.google.j2objc:j2objc-annotations:0.9.8'
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            artifactId archivesBaseName
+            from components.java
+        }
+    }
+}

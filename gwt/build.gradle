@@ -1,0 +1,32 @@
+description = 'GWT specific code of the REST utility'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
+    }
+}
+apply plugin: 'gwt-base'
+
+gwt {
+    gwtVersion = versions.gwt
+}
+
+dependencies {
+    compile 'com.google.gwt:gwt-user:' + versions.gwt
+    compile 'com.github.nmorel.gwtjackson:gwt-jackson:' + versions.gwtJackson
+    compile(project(':restutil:common')) {
+        exclude group: 'javax.validation'
+    }
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            artifactId archivesBaseName
+            from components.java
+        }
+    }
+}

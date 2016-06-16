@@ -1,6 +1,19 @@
-*.iml
+.idea
 
 build
 
-/.idea/
-/.gradle/
+generated
+
+/logs/
+
+.gradle
+
+*.iml
+
+x
+
+*.lock
+
+local.properties
+
+file-uploads

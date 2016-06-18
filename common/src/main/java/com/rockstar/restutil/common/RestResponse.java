@@ -32,7 +32,9 @@ public class RestResponse<T> {
     public RestResponse(int responseCode, String rawResponse, Map<String, String> headers, Class<T> responseType,
         RestUtil restUtil) {
         this(responseCode, rawResponse, headers);
-        if (rawResponse != null && !rawResponse.isEmpty()) {
+        if (responseType == String.class) {
+            content = (T) rawResponse;
+        } else if (rawResponse != null && !rawResponse.isEmpty()) {
             this.content = restUtil.getObject(rawResponse, responseType);
         }
     }

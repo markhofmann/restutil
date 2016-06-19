@@ -21,10 +21,11 @@ When building for the first time, you might need to install cocoapods:
 1. cd example/iosjava
 1. ./gradlew clean j2objcBuild
 
-The last step will complain about a missing Pod file. 
+The last step will complain about a missing Pod file.
+ 
 1. You need to create an XCode workspace and project in the _example/ios_ directory as described here:
   * https://github.com/j2objc-contrib/j2objc-gradle/blob/master/FAQ.md#what-is-the-recommended-folder-structure-for-my-app
-2. The create the pod file with the command given in the error message.  
+2. Then create the Podfile with the command given in the error message.  
 
 ##### Testing the client
 

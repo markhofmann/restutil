@@ -1,5 +1,6 @@
 rootProject.name = 'restutil'
-include  ':common',
+include ':common',
         ':android',
         ':gwt',
-        ':ios'
+        ':ios',
+        ':example:shared'

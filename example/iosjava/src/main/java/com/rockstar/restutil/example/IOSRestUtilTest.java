@@ -1,4 +1,4 @@
-package com.rockstar.restutil.test;
+package com.rockstar.restutil.example;
 
 import com.google.j2objc.annotations.ObjectiveCName;
 import com.rockstar.restutil.ios.IOSRestUtil;

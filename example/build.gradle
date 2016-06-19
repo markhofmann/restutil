@@ -1,0 +1,5 @@
+group = 'com.rockstar.restutil.example'
+description = 'Example calls for restutil'
+subprojects {
+    group = 'com.rockstar.restutil.example'
+}

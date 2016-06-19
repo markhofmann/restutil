@@ -1,0 +1,59 @@
+plugins {
+    id 'java'
+    id "com.github.j2objccontrib.j2objcgradle" version "0.6.0-alpha"
+}
+
+group = 'com.matchmaker.clients'
+archivesBaseName = 'matchmaker-clients-iosjava'
+
+version = '0.0.1-SNAPSHOT'
+
+apply plugin: 'maven'
+apply plugin: "idea"
+apply plugin: 'java'
+
+
+def versionsFile = file("../../versions.gradle")
+
+if (versionsFile.exists()) {
+    apply from: versionsFile
+} else {
+    println("\n#")
+    println("# versions.gradle file not found in: ${versionsFile}")
+    println("#\n")
+    System.exit(-1)
+}
+
+repositories {
+    mavenLocal()
+    jcenter()
+}
+
+sourceCompatibility = versions.java
+targetCompatibility = versions.java
+
+dependencies {
+    compile 'com.rockstar.restutil:restutil-common:' + version
+    compile 'com.rockstar.restutil:restutil-ios:' + version
+
+    compile 'com.rockstar.restutil.example:restutil-example-shared:' + version
+
+    compile 'com.google.code.gson:gson:' + versions.gson
+    compile 'com.google.guava:guava:' + versions.googleGuava
+
+    testCompile 'junit:junit:' + versions.junit
+}
+
+j2objcConfig {
+    // Sets up libraries you depend on
+    autoConfigureDeps true
+
+    // Omit these two lines if you don't configure your Xcode project with CocoaPods
+    xcodeProjectDir '../ios'
+    xcodeTargetsIos 'Example-App', 'Example-AppTests'
+
+    // Use this when your j2objc version does not match version required by gradle plugin
+    skipJ2objcVerification true
+
+    finalConfigure()          // Must be last call to configuration
+}

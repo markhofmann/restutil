@@ -1,4 +1,4 @@
-package com.rockstar.restutil.test;
+package com.rockstar.restutil.example;
 
 import com.rockstar.restutil.common.RestCallback;
 import com.rockstar.restutil.common.RestResponse;

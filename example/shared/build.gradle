@@ -1,0 +1,6 @@
+dependencies {
+    compile 'com.rockstar.restutil:restutil-common:' + version
+    compile 'com.rockstar.restutil:restutil-ios:' + version
+
+    testCompile 'junit:junit:' + versions.junit
+}

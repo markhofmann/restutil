@@ -1,0 +1,4 @@
+# set the path to where j2objc is installed
+j2objc.home=/path/to/j2objc_directory
+# speed up builds by skipping the release build
+j2objc.release.enabled=false

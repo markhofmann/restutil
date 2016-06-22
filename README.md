@@ -5,7 +5,7 @@ A cross-platform REST library that transpiles from Java to Javascript (via GWT) 
 ## HELP WANTED
 
 The utility basically works, but I need help from an IOS developer to implement the rest of the 
-IOSRestRequest:execute method or rather re-implement it using some proper framework that supports async requests.
+[IOSRestRequest.java](ios/src/main/java/com/rockstar/restutil/ios/IOSRestRequest.java):execute method or rather re-implement it using some proper framework that supports async requests.
 
 So if someone is interested in helping out, I'd be really grateful and even **willing to pay a bit**. 
 

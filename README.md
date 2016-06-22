@@ -7,7 +7,7 @@ A cross-platform REST library that transpiles from Java to Javascript (via GWT) 
 The utility basically works, but I need help from an IOS developer to implement the rest of the 
 IOSRestRequest:execute method or rather re-implement it using some proper framework that supports async requests.
 
-So if someone is interested in helping out, I'd be really grateful and even willing to pay a bit. 
+So if someone is interested in helping out, I'd be really grateful and even **willing to pay a bit**. 
 
 The project will remain open source in any case. 
 
@@ -32,12 +32,21 @@ http://arstechnica.com/information-technology/2014/11/how-google-inbox-shares-70
 
 
 ## Now, why the restutil?
- 
-Because there's more to a rest framework than just making the call and I don't feel like I want to reenvent the wheel.
-  
-The android implementation (AndroidRestUtil.java) uses Volley, the GWT implementation uses the GwtRequestBuilder.
 
-The IOS implementation should use a similar approach with some well known, proven framework. There's only one gotcha:
+**Obviously, the REST communication alone is not enough** - you could use the REST frameworks directly. But if you want
+to implement logic in Java that does the API calls plus token handling, validation etc. then you need a Java implementation to make these calls.
+ 
+Also there's more to a REST framework than just making the call and I don't feel like I want to reinvent the wheel.
+  
+The Android implementation 
+([AndroidRestRequest.java](restutil/blob/master/android/src/main/java/com/rockstar/restutil/android/AndroidRestRequest.java)) 
+uses Volley, the GWT implementation
+([GWTRestRequest.java](restutil/blob/master/gwt/src/main/java/com/rockstar/restutil/gwt/GwtRestRequest.java))
+(.java) uses the GwtRequestBuilder.
+
+The IOS implementation 
+([IOSRestRequest.java](restutil/blob/master/ios/src/main/java/com/rockstar/restutil/ios/IOSRestRequest.java))
+should use a similar approach with some well known, proven framework. There's only one gotcha:
 
 **I'm not a Objective-C developer and never will be, which is why I need your help.**
 

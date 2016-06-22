@@ -21,6 +21,10 @@ public class IOSRestRequest extends BaseRestRequest {
         super(requestMethod, url, restUtil);
     }
 
+    /**
+     * Native implementation of the execute method.
+     * See {@link com.rockstar.restutil.common.RestRequest#execute(RestCallback)} for details.
+     */
     @Override
     public native <T, E> void execute(RestCallback<T, E> callback) /*-[
 //Translate headers to NSDictionary

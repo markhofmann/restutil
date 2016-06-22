@@ -26,26 +26,24 @@ it for Android, IOS and Javascript. So only the UI Layer needs to be developed e
 This way you can keep all of the knowledge about security token handling, caching, validation etc. in your Java team and 
 reduce the amount of code that needs to be developed and tested dramatically. 
 
-See here: 
-
-http://arstechnica.com/information-technology/2014/11/how-google-inbox-shares-70-of-its-code-across-android-ios-and-the-web/
+See [this article](http://arstechnica.com/information-technology/2014/11/how-google-inbox-shares-70-of-its-code-across-android-ios-and-the-web/)
 
 
 ## Now, why the restutil?
 
-**Obviously, the REST communication alone is not enough** - you could use the REST frameworks directly. But if you want
+**Obviously, the REST communication alone is not enough** - you could use any native REST frameworks directly. But if you want
 to implement logic in Java that does the API calls plus token handling, validation etc. then you need a Java implementation to make these calls.
  
 Also there's more to a REST framework than just making the call and I don't feel like I want to reinvent the wheel.
   
 The Android implementation 
-([AndroidRestRequest.java](restutil/blob/master/android/src/main/java/com/rockstar/restutil/android/AndroidRestRequest.java)) 
+([AndroidRestRequest.java](android/src/main/java/com/rockstar/restutil/android/AndroidRestRequest.java)) 
 uses Volley, the GWT implementation
-([GWTRestRequest.java](restutil/blob/master/gwt/src/main/java/com/rockstar/restutil/gwt/GwtRestRequest.java))
+([GWTRestRequest.java](gwt/src/main/java/com/rockstar/restutil/gwt/GwtRestRequest.java))
 (.java) uses the GwtRequestBuilder.
 
 The IOS implementation 
-([IOSRestRequest.java](restutil/blob/master/ios/src/main/java/com/rockstar/restutil/ios/IOSRestRequest.java))
+([IOSRestRequest.java](ios/src/main/java/com/rockstar/restutil/ios/IOSRestRequest.java))
 should use a similar approach with some well known, proven framework. There's only one gotcha:
 
 **I'm not a Objective-C developer and never will be, which is why I need your help.**

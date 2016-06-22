@@ -2,6 +2,46 @@
 
 A cross-platform REST library that transpiles from Java to Javascript (via GWT) and to Objective-C (via j2objc).
 
+## HELP WANTED
+
+The utility basically works, but I need help from an IOS developer to implement the rest of the 
+IOSRestRequest:execute method or rather re-implement it using some proper framework that supports async requests.
+
+So if someone is interested in helping out, I'd be really grateful and even willing to pay a bit. 
+
+The project will remain open source in any case. 
+
+Also, if you happen to know a similar project that let's me maintain the frontend logic in Java, please let me know. No need to have 2 projects doing the same!
+
+
+
+## About
+
+One of the biggest problems with developing apps for multiple platforms if you don't want to rely on Javascript 
+based frameworks is that you need to have multiple teams develop the same code for each platform - and for each version of your app.
+
+Google uses this approach: They develop the logic and backend communication part of the app once in Java and then use 
+it for Android, IOS and Javascript. So only the UI Layer needs to be developed every time.
+
+This way you can keep all of the knowledge about security token handling, caching, validation etc. in your Java team and 
+reduce the amount of code that needs to be developed and tested dramatically. 
+
+See here: 
+
+http://arstechnica.com/information-technology/2014/11/how-google-inbox-shares-70-of-its-code-across-android-ios-and-the-web/
+
+
+## Now, why the restutil?
+ 
+Because there's more to a rest framework than just making the call and I don't feel like I want to reenvent the wheel.
+  
+The android implementation (AndroidRestUtil.java) uses Volley, the GWT implementation uses the GwtRequestBuilder.
+
+The IOS implementation should use a similar approach with some well known, proven framework. There's only one gotcha:
+
+**I'm not a Objective-C developer and never will be, which is why I need your help.**
+
+
 ## Building the project
 
 ### Building the IOS library

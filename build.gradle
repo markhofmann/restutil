@@ -11,13 +11,6 @@ buildscript {
     }
     repositories {
         mavenLocal()
-//        maven {
-//            credentials {
-//                username nexus.username
-//                password nexus.password
-//            }
-//            url nexus.url
-//        }
         jcenter()
     }
 }
@@ -32,32 +25,20 @@ allprojects {
     apply plugin: 'maven'
     apply plugin: 'maven-publish'
     apply plugin: 'idea'
-    version = '0.0.1-SNAPSHOT'
+    version = '0.1-SNAPSHOT'
     group = 'com.rockstar.restutil'
 
-//    publishing {
-//        publications {
-//            mavenJava(MavenPublication) {
-//                from components.java
-//                artifact sourcesJar
-//            }
-//        }
-//        repositories {
-//            // example on how to publish artifacts to a Dropbox hosted repo - the folder must be inside the "Public" folder.
-//            // maven {
-//            //     url "file:///Users/mark/Dropbox/Public/maven-repo"
-//            // }
-//
-//            // example on how to publish artifacts to a nexus repository
-//            // maven {
-//            //     credentials {
-//            //         username nexus.username
-//            //         password nexus.password
-//            //     }
-//            //     url "http://${nexus.url}/content/repositories/sample-${project.version.endsWith('-SNAPSHOT') ? 'snapshot' : 'release'}-repo"
-//            // }
-//        }
-//    }
+    publishing {
+        repositories {
+            maven {
+                credentials(AwsCredentials) {
+                    accessKey AWS_ACCESS_KEY
+                    secretKey AWS_SECRET_KEY
+                }
+                url "s3://repo.rockstar-solutions.com.s3-ap-southeast-1.amazonaws.com"
+            }
+        }
+    }
 }
 
 subprojects {
@@ -68,17 +49,6 @@ subprojects {
 
     repositories {
         mavenLocal()
-        maven {
-            // dropbox repo currently contains a custom version on vertx-nubes
-            url "https://dl.dropboxusercontent.com/u/3043508/maven-repo/"
-        }
-//        maven {
-//            credentials {
-//                username nexus.username
-//                password nexus.password
-//            }
-//            url nexus.url
-//        }
         jcenter()
     }
 

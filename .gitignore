@@ -16,4 +16,6 @@ x
 
 local.properties
 
+gradle.properties
+
 file-uploads

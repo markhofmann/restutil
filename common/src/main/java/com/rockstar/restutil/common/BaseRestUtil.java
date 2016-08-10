@@ -41,6 +41,28 @@ public abstract class BaseRestUtil implements RestUtil {
 
 
     @Override
+    public <D, T, E> void put(String urlStr, D object, Map<String, String> headers, RestCallback<T, E> callback) {
+        exec(RestRequest.RequestMethod.PUT, urlStr, object, null, headers, callback);
+    }
+
+    @Override
+    public <D, T, E> void put(String urlStr, D object, Map<String, Object> parameters, Map<String, String> headers,
+        RestCallback<T, E> callback) {
+        exec(RestRequest.RequestMethod.PUT, urlStr, object, parameters, headers, callback);
+    }
+
+    @Override
+    public <T, E> void delete(String urlStr, Map<String, String> headers, RestCallback<T, E> callback) {
+        exec(RestRequest.RequestMethod.DELETE, urlStr, null, null, headers, callback);
+    }
+
+    @Override
+    public <T, E> void delete(String urlStr, Map<String, Object> parameters, Map<String, String> headers,
+        RestCallback<T, E> callback) {
+        exec(RestRequest.RequestMethod.DELETE, urlStr, null, parameters, headers, callback);
+    }
+
+    @Override
     public <T, E> void get(String urlStr, Map<String, Object> parameters,
         Map<String, String> headers,
         RestCallback<T, E> callback) {
@@ -65,7 +87,7 @@ public abstract class BaseRestUtil implements RestUtil {
         get(urlStr, parameters, null, callback);
     }
 
-    protected <D, T, E> void exec(RestRequest.RequestMethod method, String urlStr,
+    private <D, T, E> void exec(RestRequest.RequestMethod method, String urlStr,
         D body,
         Map<String, Object> parameters,
         Map<String, String> headers,
@@ -92,7 +114,7 @@ public abstract class BaseRestUtil implements RestUtil {
         executeRequest(method, urlStr, body, parameters, headers, fileUri, callback);
     }
 
-    protected <D, T, E> void executeRequest(
+    private <D, T, E> void executeRequest(
         RestRequest.RequestMethod method,
         String urlStr,
         D body,

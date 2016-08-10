@@ -1,0 +1,14 @@
+machine:
+  java:
+    version: oraclejdk8
+
+dependencies:
+  pre:
+    - ./prepareGradleProperties.sh
+  override:
+    - ./gradlew clean install publish
+
+# disable tests for now
+test:
+  override:
+    - /bin/true

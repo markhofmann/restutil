@@ -31,9 +31,4 @@ publishing {
             artifact sourcesJar
         }
     }
-    repositories {
-        maven {
-            url "file:///Users/mark/Dropbox/Public/maven-repo"
-        }
-    }
 }

@@ -58,7 +58,7 @@ When building for the first time, you might need to install cocoapods:
     sudo gem install -V cocoapods
 
 
-1. Install j2objc 1.0.2
+1. Install the latest j2objc release
   * https://github.com/google/j2objc/releases
 1. cd into the root directory of restutil
 1. cp example/iosjava/local.properties.example example/iosjava/local.properties
@@ -76,7 +76,9 @@ The last step will complain about a missing Pod file.
 
 ##### Testing the client
 
-TODO
+After building successfully, the objectivec library should contain a class called "IOSRestUtilTest" containing a "testGet" method.
+
+Simply import the library and invoke the "testGet" method, it should print the response to system out. 
 
 ##### Using the generated code
 

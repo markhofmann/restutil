@@ -6,7 +6,7 @@ plugins {
 group = 'com.matchmaker.clients'
 archivesBaseName = 'matchmaker-clients-iosjava'
 
-version = '0.0.1-SNAPSHOT'
+version = '0.1-SNAPSHOT'
 
 apply plugin: 'maven'
 apply plugin: "idea"

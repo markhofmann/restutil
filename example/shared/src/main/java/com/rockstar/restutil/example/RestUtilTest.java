@@ -9,21 +9,21 @@ import com.rockstar.restutil.common.RestUtil;
  */
 public class RestUtilTest {
     public void testGet(RestUtil restUtil) throws Exception {
-        restUtil.get("http://api.users.rockstar-solutions.com/_/health",
+        restUtil.get("https://jsonplaceholder.typicode.com/posts/1",
             new RestCallback<String, String>() {
                 @Override
                 public void onSuccess(RestResponse<String> response) {
-                    System.out.println("recieved response:" + response.getRawResponse());
+                    System.out.println("received response:" + response.getRawResponse());
                 }
 
                 @Override
                 public void onError(RestResponse<String> errorResponse) {
-                    System.out.println("recieved error response:" + errorResponse.getRawResponse());
+                    System.out.println("received error response:" + errorResponse.getRawResponse());
                 }
 
                 @Override
                 public void onNetworkError(String reason) {
-                    System.out.println("recieved network response:" + reason);
+                    System.out.println("received network response:" + reason);
                 }
 
                 @Override

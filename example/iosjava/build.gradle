@@ -50,10 +50,12 @@ j2objcConfig {
 
     // Omit these two lines if you don't configure your Xcode project with CocoaPods
     xcodeProjectDir '../ios'
-    xcodeTargetsIos 'Example-App', 'Example-AppTests'
+    xcodeTargetsIos 'restutilTest'
 
     // Use this when your j2objc version does not match version required by gradle plugin
     skipJ2objcVerification true
+
+    testMinExpectedTests 0
 
     finalConfigure()          // Must be last call to configuration
 }

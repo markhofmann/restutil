@@ -53,9 +53,16 @@ should use a similar approach with some well known, proven framework. There's on
 
 ### Building the IOS library
 
-When building for the first time, you might need to install cocoapods:
+When building for the first time, you might need to install cocoapods.
 
-    sudo gem install -V cocoapods
+NOTE: j2objc is not compatible with cocoapods 1.x, version 0.39.0 works for me.
+
+1. check for your version
+  * pod --version
+1. uninstall cocoapods
+  * sudo gem uninstall cocoapods
+1. install version 0.39.0
+  * sudo gem install cocoapods -v 0.39.0
 
 
 1. Install the latest j2objc release
@@ -66,8 +73,9 @@ When building for the first time, you might need to install cocoapods:
 1. ./gradlew clean install
   * (this may take a while when run for the first time)
 1. cd example/iosjava
-1. ./gradlew clean j2objcBuild
-
+1. ./gradlew clean && ./gradlew j2objcBuild
+  * NOTE: "./gradlew clean j2objcBuild" does not work with j2objc, you need to run it in separate gradle processes 
+  
 The last step will complain about a missing Pod file.
  
 1. You need to create an XCode workspace and project in the _example/ios_ directory as described here:

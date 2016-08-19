@@ -170,7 +170,7 @@ subprojects {
 //            scopes.PROVIDED.plus += [configurations.provided]
 
             downloadJavadoc = false
-            downloadSources = true
+            downloadSources = false
         }
     }
 

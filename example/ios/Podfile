@@ -15,4 +15,6 @@ target 'restutilTest' do
     platform :ios, '8.3'
     j2objc_iosjava
 
+    pod 'Unirest'
+
 end

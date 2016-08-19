@@ -9,6 +9,7 @@ import com.rockstar.restutil.common.RestUtil;
   #import <NSDictionaryMap.h>
   #import <java/util/HashMap.h>
   #import <java/util/Iterator.h>
+  #import <UNIRest.h>
   ]-*/
 
 
@@ -27,137 +28,50 @@ public class IOSRestRequest extends BaseRestRequest {
      */
     @Override
     public native <T, E> void execute(RestCallback<T, E> callback) /*-[
-//Translate headers to NSDictionary
-    JavaUtilHashMap *headerMap = [[JavaUtilHashMap alloc] initWithJavaUtilMap:headers_];
-    NSMutableDictionary *headerDictionary = [[NSMutableDictionary alloc] init];
-    id <JavaUtilIterator> iterator = [headerMap newKeyIterator];
-    while ([iterator hasNext]) {
-        id object = [iterator next];
-        [headerDictionary setObject:[headerMap getWithId:object] forKey:object];
-    }
-    //Translate parameters_ to NSDictionary
-    JavaUtilHashMap *parameterMap = [[JavaUtilHashMap alloc] initWithJavaUtilMap:parameters_];
-    NSMutableDictionary *parameterDictionary = [[NSMutableDictionary alloc] init];
-    iterator = [parameterMap newKeyIterator];
-    while ([iterator hasNext]) {
-        id object = [iterator next];
-        [parameterDictionary setObject:[parameterMap getWithId:object] forKey:object];
-    }
+            NSDictionary* headers = @{@"accept": @"application/json"};
+            //NSDictionary* parameters = @{@"origin": @"35.776,51.464", @"destination": @"35.782776,51.433414"};
+            
+            // UNIHTTPJsonResponse *response = [[UNIRest get:^(UNISimpleRequest *request) {
+            //     [request setUrl:@"https://maps.googleapis.com/maps/api/directions/json"];
+            //     [request setHeaders:headers];
+            //     [request setParameters:parameters];
+            // }] asJson];
 
-    // 2
-    NSURLSessionConfiguration *sessionConfig =
-    [NSURLSessionConfiguration defaultSessionConfiguration];
-    [sessionConfig setHTTPAdditionalHeaders:headerDictionary];
+            //Translate headers to NSDictionary
+            // JavaUtilHashMap *headerMap = [[JavaUtilHashMap alloc] initWithJavaUtilMap:headers_];
+            // NSMutableDictionary *headerDictionary = [[NSMutableDictionary alloc] init];
+            // id <JavaUtilIterator> iterator = [headerMap newKeyIterator];
+            // while ([iterator hasNext]) {
+            //     id object = [iterator next];
+            //     [headerDictionary setObject:[headerMap getWithId:object] forKey:object];
+            // }
 
-    // 3
-    NSURLSession *session =
-    [NSURLSession sessionWithConfiguration:sessionConfig
-                                  delegate:nil
-                             delegateQueue:nil];
-    switch ([requestMethod_ ordinal])  {
-        case RestRequest_RequestMethod_Enum_GET:{
-
-            NSURLSessionDataTask *jsonData = [session dataTaskWithURL:[NSURL URLWithString:url_]
-                completionHandler:^(NSData *data,
-                                    NSURLResponse *response,
-                                    NSError *error) {
-                if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
-
-                    if([((NSHTTPURLResponse *)response) statusCode] != 200){
-                        NSLog(@"Error getting %@, HTTP status code %li",
-                        url_,(long)[((NSHTTPURLResponse *)response)
-                        statusCode]);
-                        //        return nil;
-                    }
-                }
-                // handle NSData
-            }];
-            [jsonData resume];
-            break;
-        }
-        case RestRequest_RequestMethod_Enum_POST:{
-            // Build the request body
-            NSDate *now= [NSDate date] ;
-            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-            [dateFormatter setDateFormat:@"dd-MM-YYYY HH:mm:ss"];
-            NSString *boundary =[dateFormatter stringFromDate:now];
-
-            NSMutableData *body = [NSMutableData data];
-
-            // Body part for parameters_ as JSON. This is a string.
-            NSError *error;
-            // Pass 0 if you don't care about the readability of the generated string
-            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:parameterDictionary
-                   options:NSJSONWritingPrettyPrinted
-                   error:&error];
-
-            if (! jsonData && [parameterDictionary count] == 0) {
-                NSLog(@"Got an error: %@", error);
-            } else {
-                NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-
-                [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary]
-                dataUsingEncoding:NSUTF8StringEncoding]];
-                [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n",
-                @"json={"] dataUsingEncoding:NSUTF8StringEncoding]];
-                [body appendData:[[NSString stringWithFormat:@"%@\r\n", jsonString]
-                dataUsingEncoding:NSUTF8StringEncoding]];
-                [body appendData:[[NSString stringWithFormat:@"}"] dataUsingEncoding:NSUTF8StringEncoding]];
-
-            }
-            if(fileUri_ != nil){
-            // Body part for the attachament. This is an image.
-                NSData *fileData = [NSData dataWithContentsOfFile:fileUri_];
-                if (fileData) {
-                    [body appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary]
-                    dataUsingEncoding:NSUTF8StringEncoding]];
-                    [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=%@;filename=image.jpg\r\n", @"image"] dataUsingEncoding:NSUTF8StringEncoding]];
-                    [body appendData:[@"Content-Type: image/jpeg\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-                    [body appendData:fileData];
-                    [body appendData:[[NSString stringWithFormat:@"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-                }
-                [body appendData:[[NSString stringWithFormat:@"--%@--\r\n", boundary]
-                dataUsingEncoding:NSUTF8StringEncoding]];
+            //Translate parameters_ to NSDictionary
+            JavaUtilHashMap *parameterMap = [[JavaUtilHashMap alloc] initWithJavaUtilMap:parameters_];
+            NSMutableDictionary *parameterDictionary = [[NSMutableDictionary alloc] init];
+            id <JavaUtilIterator> iterator = [parameterMap newKeyIterator];
+            while ([iterator hasNext]) {
+                id object = [iterator next];
+                [parameterDictionary setObject:[parameterMap getWithId:object] forKey:object];
             }
 
-            //Build the request
-            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url_]];
-            request.HTTPMethod = @"POST";
-            request.HTTPBody = body;
+            [[UNIRest get:^(UNISimpleRequest *request) {
+              [request setUrl:[self getUrl]];
+              [request setHeaders:headers];
+              [request setParameters:parameterDictionary];
+            }] asJsonAsync:^(UNIHTTPJsonResponse* response, NSError *error) {
+              // This is the asyncronous callback block
+              NSInteger code = response.code;
+              NSDictionary *responseHeaders = response.headers;
+              UNIJsonNode *body = response.body;
+              NSData *rawBody = response.rawBody;
 
-            NSURLSessionUploadTask *pData = [session uploadTaskWithRequest:request fromData:body completionHandler:^
-            (NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-                if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+//              NSLog(@"%@",response.body.JSONObject);
 
-                    if([((NSHTTPURLResponse *)response) statusCode] != 200){
-                        NSLog(@"Error getting %@, HTTP status code %li", url_,
-                        (long)[((NSHTTPURLResponse *)response) statusCode]);
-                        //        return nil;
-                    }
-                }
-                // handle NSData
+              [callback onSuccessWithRestResponse:(RestResponse *)response];
+              // [self executeCallbackWithRestCallback:callback withInt:code withNSString:responseText];
             }];
-            [pData resume];
-            break;
-        }
-        default:
-            break;
-    }
-
-    NSURLSessionDataTask *jsonData = [session dataTaskWithURL:[NSURL URLWithString:url_]
-                                            completionHandler:^(NSData *data,
-                                                                NSURLResponse *response,
-                                                                NSError *error) {
-                                                if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
-
-                                                    if([((NSHTTPURLResponse *)response) statusCode] != 200){
-                                                        NSLog(@"Error getting %@, HTTP status code %li", url_,
-                                                        (long)[((NSHTTPURLResponse *)response) statusCode]);
-                                                //        return nil;
-                                                    }
-                                                }
-                                                // handle NSData
-                                            }];
-    [jsonData resume];
+            
+            
         ]-*/;
 }

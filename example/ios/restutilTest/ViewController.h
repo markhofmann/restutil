@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+#import "RestCallback.h"
 
+@interface ViewController : UIViewController<RestCallback>
+
+@property (strong, nonatomic) IBOutlet UILabel *distanceLabel;
+@property (strong, nonatomic) IBOutlet UILabel *durationLabel;
 
 @end
 

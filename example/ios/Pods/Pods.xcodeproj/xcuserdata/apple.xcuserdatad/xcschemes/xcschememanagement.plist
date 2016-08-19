@@ -9,10 +9,20 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Unirest.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>F6CD052682C47E3235237E3B1F5BA263</key>
+		<key>2E6D5B816AC45993C6A55CCA0CA8AC80</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CB79C0313813067FE94F32420DD10223</key>
 		<dict>
 			<key>primary</key>
 			<true/>

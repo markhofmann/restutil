@@ -57,5 +57,8 @@ j2objcConfig {
 
     testMinExpectedTests 0
 
+    //extraNativeLib project: ':../ios', library: 'Unirest', linkage: 'static'
+    extraObjcCompilerArgs '-I/Users/apple/Desktop/XCode/restutil/restutil/example/ios/Pods/Unirest/Unirest/'
+
     finalConfigure()          // Must be last call to configuration
 }

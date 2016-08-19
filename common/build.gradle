@@ -4,7 +4,7 @@ sourceCompatibility = versions.androidJava
 targetCompatibility = versions.androidJava
 
 dependencies {
-    compile 'com.google.j2objc:j2objc-annotations:0.9.8'
+    compile 'com.google.j2objc:j2objc-annotations:'+versions.j2objcAnnotations
 }
 
 publishing {

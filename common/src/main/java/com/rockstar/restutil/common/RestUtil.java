@@ -148,6 +148,34 @@ public interface RestUtil {
 
 
     /**
+     * Sends a DELETE request with the body containing the given object as json to the specified url.
+     *
+     * @param urlStr   The url to send the request to.
+     * @param object   The object to be sent.
+     * @param headers  The headers to include in the request.
+     * @param callback The callback handler.
+     * @param <D>      The type of the json object.
+     * @param <T>      The type of the return value
+     * @param <E>      The error type.
+     */
+    <D, T, E> void delete(String urlStr, D object, Map<String, String> headers, RestCallback<T, E> callback);
+
+    /**
+     * Sends a DELETE request with the body containing the given object as json to the specified url.
+     *
+     * @param urlStr     The url to send the POST request to.
+     * @param object     The object to be sent.
+     * @param parameters The parameters to send along with the object.
+     * @param headers    The headers to include in the POST request.
+     * @param callback   The callback handler.
+     * @param <D>        The type of the json object.
+     * @param <T>        The type of the return value
+     * @param <E>        The error type.
+     */
+    <D, T, E> void delete(String urlStr, D object, Map<String, Object> parameters, Map<String, String> headers,
+        RestCallback<T, E> callback);
+
+    /**
      * Sends a GET request to the given url.
      *
      * @param urlStr   The url to send the GET request to.

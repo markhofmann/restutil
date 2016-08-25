@@ -63,6 +63,17 @@ public abstract class BaseRestUtil implements RestUtil {
     }
 
     @Override
+    public <D, T, E> void delete(String urlStr, D object, Map<String, String> headers, RestCallback<T, E> callback) {
+        exec(RestRequest.RequestMethod.DELETE, urlStr, object, null, headers, callback);
+    }
+
+    @Override
+    public <D, T, E> void delete(String urlStr, D object, Map<String, Object> parameters, Map<String, String> headers,
+        RestCallback<T, E> callback) {
+        exec(RestRequest.RequestMethod.DELETE, urlStr, object, parameters, headers, callback);
+    }
+
+    @Override
     public <T, E> void get(String urlStr, Map<String, Object> parameters,
         Map<String, String> headers,
         RestCallback<T, E> callback) {
@@ -75,6 +86,7 @@ public abstract class BaseRestUtil implements RestUtil {
         exec(RestRequest.RequestMethod.POST, urlStr, body, parameters, headers, callback);
     }
 
+    @Override
     public <T, E> void get(String urlStr, RestCallback<T, E> callback) {
         get(urlStr, null, null, callback);
     }
@@ -83,6 +95,7 @@ public abstract class BaseRestUtil implements RestUtil {
      * Performs a GET request.
      * NOTE that all parameters must already be url encoded
      */
+    @Override
     public <T, E> void get(String urlStr, Map<String, Object> parameters, RestCallback<T, E> callback) {
         get(urlStr, parameters, null, callback);
     }

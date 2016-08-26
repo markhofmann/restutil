@@ -72,12 +72,11 @@ NOTE: j2objc is not compatible with cocoapods 1.x, version 0.39.0 works for me.
 1. cd into the root directory of restutil
 1. cp example/iosjava/local.properties.example example/iosjava/local.properties
 1. set your j2objc install dir in local.properties
-1. ./gradlew clean install
-  * (this may take a while when run for the first time)
-1. cd example/iosjava
-1. ./gradlew clean && ./gradlew j2objcBuild
-  * NOTE: "./gradlew clean j2objcBuild" does not work with j2objc, you need to run it in separate gradle processes 
+1. ./run
+	*NOTE: whenever you changed the java code, it's necessary to run this command again which convert java codes to Objective C and then pack it in a static library which the iOS project imports.
+
   
+
  
 ##### Testing the client
 

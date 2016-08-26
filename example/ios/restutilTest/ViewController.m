@@ -32,11 +32,13 @@
     
 //    [t testGet];
     
+    
     jfloat ox = 35.776;
     jfloat oy = 51.464;
     jfloat dx = 35.782776;
     jfloat dy = 51.433414;
     
+     
     [t getGoogleMapsDirectionWithFloat:ox withFloat:oy withFloat:dx withFloat:dy withRestCallback:self];
     
     
@@ -61,6 +63,8 @@
 //        [parameterDictionary setObject:[parameterMap getWithId:object] forKey:object];
 //    }
     
+
+    
     
 }
 
@@ -76,6 +80,8 @@
     
     NSLog(@"%@",r.body.JSONObject);
     
+    //Response from Google Directection API
+    
     NSDictionary *direction = r.body.JSONObject[@"routes"][0][@"legs"][0];
     
     NSString *distance = direction[@"distance"][@"text"];
@@ -87,6 +93,9 @@
         self.durationLabel.text = duration;
         
     });
+     
+    
+    
 }
 
 -(void)onErrorWithRestResponse:(RestResponse *)errorResponse {

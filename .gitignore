@@ -28,3 +28,5 @@ file-uploads
 /example/ios/Pods/Target Support Files/Pods-restutilTest/Pods-restutilTest.debug.xcconfig
 /example/ios/Pods/Local Podspecs/j2objc-iosjava-release.podspec.json
 /example/ios/Pods/Local Podspecs/j2objc-iosjava-debug.podspec.json
+
+.DS_Store

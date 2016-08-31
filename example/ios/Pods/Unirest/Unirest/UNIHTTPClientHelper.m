@@ -124,7 +124,8 @@
                         NSData* data = [NSData dataWithContentsOfURL:value];
                         
                         [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"; filename=\"%@\"\r\n", key, filename] dataUsingEncoding:NSUTF8StringEncoding]];
-                        [body appendData:[[NSString stringWithFormat:@"Content-Length: %d\r\n\r\n", data.length] dataUsingEncoding:NSUTF8StringEncoding]];
+                        [body appendData:[@"Content-Type: image/jpeg\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+//                        [body appendData:[[NSString stringWithFormat:@"Content-Length: %d\r\n\r\n", data.length] dataUsingEncoding:NSUTF8StringEncoding]];
                         [body appendData:data];
                     } else {
                         [body appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", BOUNDARY] dataUsingEncoding:NSUTF8StringEncoding]];
@@ -145,6 +146,8 @@
             // Has a body
             body = [NSMutableData dataWithData:[requestWithBody body]];
         }
+        
+        NSString *bodyText = [[NSString alloc] initWithData:body encoding:NSUTF8StringEncoding];
         
         [requestObj setHTTPBody:body];
     }
@@ -169,8 +172,11 @@
     }
     
     // Add headers
-    [headers setValue:@"unirest-objc/1.1" forKey:@"user-agent"];
-    [headers setValue:@"gzip" forKey:@"accept-encoding"];
+//    [headers setValue:@"unirest-objc/1.1" forKey:@"user-agent"];
+//    [headers setValue:@"gzip" forKey:@"accept-encoding"];
+    
+//    NSString *contentLength = [NSString stringWithFormat:@"%d",(int)body.length];
+//    [requestObj addValue:contentLength forHTTPHeaderField:@"Content-Length"];
     
     // Add cookies to the headers
     [headers setValuesForKeysWithDictionary:[NSHTTPCookie requestHeaderFieldsWithCookies:[[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:[NSURL URLWithString:url]]]];

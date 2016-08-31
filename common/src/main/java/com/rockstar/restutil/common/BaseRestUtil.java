@@ -34,9 +34,9 @@ public abstract class BaseRestUtil implements RestUtil {
     }
 
     @Override
-    public <T, E> void post(String urlStr, String fileUri, Map<String, String> parameters,
+    public <T, E> void post(String urlStr, String fileUri, Map<String, Object> parameters,
         RestCallback<T, E> callback) {
-        exec(RestRequest.RequestMethod.POST, urlStr, null, null, null, fileUri, callback);
+        exec(RestRequest.RequestMethod.POST, urlStr, null, parameters, null, fileUri, callback);
     }
 
 

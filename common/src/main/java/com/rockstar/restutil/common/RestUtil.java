@@ -20,7 +20,7 @@ public interface RestUtil {
      * @param <T>        The type of the return value
      * @param <E>        The error type.
      */
-    <T, E> void post(String urlStr, String fileUri, Map<String, String> parameters, RestCallback<T, E> callback);
+    <T, E> void post(String urlStr, String fileUri, Map<String, Object> parameters, RestCallback<T, E> callback);
 
     /**
      * Uploads the given file as multipart/form-data along with the given object.

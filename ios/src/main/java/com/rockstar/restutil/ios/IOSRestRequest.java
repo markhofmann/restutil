@@ -47,15 +47,22 @@ public class IOSRestRequest extends BaseRestRequest {
             // }
 
             //Translate parameters_ to NSDictionary
-            JavaUtilHashMap *parameterMap = [[JavaUtilHashMap alloc] initWithJavaUtilMap:parameters_];
-            NSMutableDictionary *parameterDictionary = [[NSMutableDictionary alloc] init];
-            id <JavaUtilIterator> iterator = [parameterMap newKeyIterator];
-            while ([iterator hasNext]) {
-                id object = [iterator next];
-                [parameterDictionary setObject:[parameterMap getWithId:object] forKey:object];
-            }
+      JavaUtilHashMap *parameterMap = [[JavaUtilHashMap alloc] initWithJavaUtilMap:parameters_];
+      NSMutableDictionary *parameterDictionary = [[NSMutableDictionary alloc] init];
+      id <JavaUtilIterator> iterator = [parameterMap newKeyIterator];
+      while ([iterator hasNext]) {
+          id object = [iterator next];
+          [parameterDictionary setObject:[parameterMap getWithId:object] forKey:object];
+      }
 
-            if ([[[self getRequestMethod] getMethod] isEqualToString:@"GET"]) {
+      if ([self getFileUri]) {
+          NSURL *url = [NSURL fileURLWithPath:[self getFileUri]];
+          [parameterDictionary setObject:url forKey:@"fileUpload"];
+      }
+
+      // NSLog(@"%@",parameterDictionary);
+
+      if ([[[self getRequestMethod] getMethod] isEqualToString:@"GET"]) {
         [[UNIRest get:^(UNISimpleRequest *request) {
           [request setUrl:[self getUrl]];
           [request setHeaders:headers];

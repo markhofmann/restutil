@@ -28,10 +28,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
+
+    
     IOSRestUtilTest *t = [[IOSRestUtilTest alloc] init];
     
 //    [t testGet];
     
+
     
     jfloat ox = 35.776;
     jfloat oy = 51.464;
@@ -40,6 +43,7 @@
     
      
     [t getGoogleMapsDirectionWithFloat:ox withFloat:oy withFloat:dx withFloat:dy withRestCallback:self];
+    
     
     
 //    NSDictionary* headers = @{@"accept": @"application/json"};
@@ -62,9 +66,6 @@
 //        id object = [iterator next];
 //        [parameterDictionary setObject:[parameterMap getWithId:object] forKey:object];
 //    }
-    
-
-    
     
 }
 
@@ -99,11 +100,13 @@
 }
 
 -(void)onErrorWithRestResponse:(RestResponse *)errorResponse {
-    NSLog(@"error");
+    UNIHTTPJsonResponse *r = (UNIHTTPJsonResponse *)errorResponse;
+    
+    NSLog(@"error: %@",r.body.object);
 }
 
 -(void)onNetworkErrorWithNSString:(NSString *)reason {
-    NSLog(@"network error");
+    NSLog(@"network error: %@",reason);
 }
 
 -(IOSClass *)getResponseType {

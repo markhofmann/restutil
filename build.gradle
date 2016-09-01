@@ -25,7 +25,7 @@ allprojects {
     apply plugin: 'maven'
     apply plugin: 'maven-publish'
     apply plugin: 'idea'
-    version = '0.1-SNAPSHOT'
+    version = '0.2-SNAPSHOT'
     group = 'com.rockstar.restutil'
 
     publishing {

@@ -36,7 +36,7 @@ dependencies {
     compile 'com.rockstar.restutil:restutil-common:' + versions.restutil
     compile 'com.rockstar.restutil:restutil-ios:' + versions.restutil
 
-    compile 'com.rockstar.restutil.example:restutil-example-shared:' + version
+    compile 'com.rockstar.restutil.example:restutil-example-shared:' + versions.restutil
 
     compile 'com.google.code.gson:gson:' + versions.gson
     compile 'com.google.guava:guava:' + versions.googleGuava

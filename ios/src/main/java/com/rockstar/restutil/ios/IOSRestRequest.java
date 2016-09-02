@@ -18,10 +18,13 @@ import com.rockstar.restutil.common.RestCallback;
  */
 @ObjectiveCName("IOSRestRequest")
 public class IOSRestRequest extends BaseRestRequest {
-    public IOSRestRequest(RequestMethod requestMethod, String url, RestUtil restUtil) {
-        super(requestMethod, url, restUtil);
+    public IOSRestRequest(RequestMethod requestMethod, String urll, RestUtil restUtil) {
+        super(requestMethod, urll, restUtil);
     }
 
+    public void dummy() {
+      
+    }
     /**
      * Native implementation of the execute method.
      * See {@link com.rockstar.restutil.common.RestRequest#execute(RestCallback)} for details.

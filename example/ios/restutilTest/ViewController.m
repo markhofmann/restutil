@@ -46,8 +46,8 @@
     
     
     
-    NSDictionary* headers = @{@"accept": @"application/json"};
-    NSDictionary* parameters = @{@"origin": @"35.776,51.464", @"destination": @"35.782776,51.433414"};
+//    NSDictionary* headers = @{@"accept": @"application/json"};
+//    NSDictionary* parameters = @{@"origin": @"35.776,51.464", @"destination": @"35.782776,51.433414"};
 //
 //    UNIHTTPJsonResponse *response = [[UNIRest get:^(UNISimpleRequest *request) {
 //        [request setUrl:@"https://maps.googleapis.com/maps/api/directions/json"];
@@ -67,19 +67,19 @@
 //        [parameterDictionary setObject:[parameterMap getWithId:object] forKey:object];
 //    }
     
-    UNIHTTPStringResponse *response = [[UNIRest get:^(UNISimpleRequest *request) {
-        [request setUrl:@"https://maps.googleapis.com/maps/api/directions/json"];
-        [request setHeaders:headers];
-        [request setParameters:parameters];
-    }] asString];
-
-    NSString *body = response.body;
-    
-    NSDictionary *resHeaders = response.headers;
-    id<JavaUtilMap> headersMap = create_JavaUtilHashMap_init();
-    for (NSString *key in resHeaders.allKeys) {
-        [headersMap putWithId:key withId:resHeaders[key]];
-    }
+//    UNIHTTPStringResponse *response = [[UNIRest get:^(UNISimpleRequest *request) {
+//        [request setUrl:@"https://maps.googleapis.com/maps/api/directions/json"];
+//        [request setHeaders:headers];
+//        [request setParameters:parameters];
+//    }] asString];
+//
+//    NSString *body = response.body;
+//    
+//    NSDictionary *resHeaders = response.headers;
+//    id<JavaUtilMap> headersMap = create_JavaUtilHashMap_init();
+//    for (NSString *key in resHeaders.allKeys) {
+//        [headersMap putWithId:key withId:resHeaders[key]];
+//    }
 
     
 }

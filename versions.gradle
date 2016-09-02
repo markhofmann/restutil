@@ -5,6 +5,8 @@ ext.versions = [
 
         j2objcAnnotations    : '1.1',
 
+        restutil             : '0.2-SNAPSHOT',
+
         android              : '4.1.1.4',
 
         aspectj              : '1.8.+',

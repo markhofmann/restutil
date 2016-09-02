@@ -33,8 +33,8 @@ sourceCompatibility = versions.java
 targetCompatibility = versions.java
 
 dependencies {
-    compile 'com.rockstar.restutil:restutil-common:' + version
-    compile 'com.rockstar.restutil:restutil-ios:' + version
+    compile 'com.rockstar.restutil:restutil-common:' + versions.restutil
+    compile 'com.rockstar.restutil:restutil-ios:' + versions.restutil
 
     compile 'com.rockstar.restutil.example:restutil-example-shared:' + version
 

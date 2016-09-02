@@ -1,9 +1,9 @@
 package com.rockstar.restutil.ios;
 
 import com.google.j2objc.annotations.ObjectiveCName;
+import com.rockstar.restutil.common.RestUtil;
 import com.rockstar.restutil.common.BaseRestRequest;
 import com.rockstar.restutil.common.RestCallback;
-import com.rockstar.restutil.common.RestUtil;
 
 /*-[
   #import <NSDictionaryMap.h>
@@ -67,100 +67,132 @@ public class IOSRestRequest extends BaseRestRequest {
           [request setUrl:[self getUrl]];
           [request setHeaders:headers];
           [request setParameters:parameterDictionary];
-        }] asJsonAsync:^(UNIHTTPJsonResponse* response, NSError *error) {
+        }] asStringAsync:^(UNIHTTPStringResponse* response, NSError *error) {
           // This is the asyncronous callback block
           NSInteger code = response.code;
           NSDictionary *responseHeaders = response.headers;
-          UNIJsonNode *body = response.body;
-          NSData *rawBody = response.rawBody;
+          // UNIJsonNode *body = response.body;
+          // NSData *rawBody = response.rawBody;
           
           //              NSLog(@"%@",response.body.JSONObject);
           
-          if(error) {
-            NSString *errMsg = error.userInfo[@"NSLocalizedDescription"];
-            [callback onNetworkErrorWithNSString:errMsg];
-          } else if(code == 200){
-            [callback onSuccessWithRestResponse:(RestResponse *)response];
-          } else {
-            [callback onErrorWithRestResponse:(RestResponse *)response];
-          }
+          // if(error) {
+          //   NSString *errMsg = error.userInfo[@"NSLocalizedDescription"];
+          //   [callback onNetworkErrorWithNSString:errMsg];
+          // } else if(code == 200){
+          //   [callback onSuccessWithRestResponse:(RestResponse *)response];
+          // } else {
+          //   [callback onErrorWithRestResponse:(RestResponse *)response];
+          // }
           
-          // [self executeCallbackWithRestCallback:callback withInt:code withNSString:responseText];
+          NSString *responseText = response.body;
+
+          id<JavaUtilMap> headersMap = create_JavaUtilHashMap_init();
+          for (NSString *key in responseHeaders.allKeys) {
+              [headersMap putWithId:key withId:responseHeaders[key]];
+          }
+
+          [self executeCallbackWithRestCallback:callback withInt:code withNSString:responseText withJavaUtilMap:headersMap];
+
         }];
       } else if ([[[self getRequestMethod] getMethod] isEqualToString:@"POST"]) {
         [[UNIRest post:^(UNISimpleRequest *request) {
           [request setUrl:[self getUrl]];
           [request setHeaders:headers];
           [request setParameters:parameterDictionary];
-        }] asJsonAsync:^(UNIHTTPJsonResponse* response, NSError *error) {
+        }] asStringAsync:^(UNIHTTPStringResponse* response, NSError *error) {
           // This is the asyncronous callback block
           NSInteger code = response.code;
           NSDictionary *responseHeaders = response.headers;
-          UNIJsonNode *body = response.body;
-          NSData *rawBody = response.rawBody;
+          // UNIJsonNode *body = response.body;
+          // NSData *rawBody = response.rawBody;
           
           //              NSLog(@"%@",response.body.JSONObject);
           
-          if(error) {
-            NSString *errMsg = error.userInfo[@"NSLocalizedDescription"];
-            [callback onNetworkErrorWithNSString:errMsg];
-          } else if(code == 200){
-            [callback onSuccessWithRestResponse:(RestResponse *)response];
-          } else {
-            [callback onErrorWithRestResponse:(RestResponse *)response];
+          // if(error) {
+          //   NSString *errMsg = error.userInfo[@"NSLocalizedDescription"];
+          //   [callback onNetworkErrorWithNSString:errMsg];
+          // } else if(code == 200){
+          //   [callback onSuccessWithRestResponse:(RestResponse *)response];
+          // } else {
+          //   [callback onErrorWithRestResponse:(RestResponse *)response];
+          // }
+
+          NSString *responseText = response.body;
+
+          id<JavaUtilMap> headersMap = create_JavaUtilHashMap_init();
+          for (NSString *key in responseHeaders.allKeys) {
+              [headersMap putWithId:key withId:responseHeaders[key]];
           }
 
-          // [self executeCallbackWithRestCallback:callback withInt:code withNSString:responseText];
+          [self executeCallbackWithRestCallback:callback withInt:code withNSString:responseText withJavaUtilMap:headersMap];
+
         }];
       } else if ([[[self getRequestMethod] getMethod] isEqualToString:@"PUT"]) {
         [[UNIRest put:^(UNISimpleRequest *request) {
           [request setUrl:[self getUrl]];
           [request setHeaders:headers];
           [request setParameters:parameterDictionary];
-        }] asJsonAsync:^(UNIHTTPJsonResponse* response, NSError *error) {
+        }] asStringAsync:^(UNIHTTPStringResponse* response, NSError *error) {
           // This is the asyncronous callback block
           NSInteger code = response.code;
           NSDictionary *responseHeaders = response.headers;
-          UNIJsonNode *body = response.body;
-          NSData *rawBody = response.rawBody;
+          // UNIJsonNode *body = response.body;
+          // NSData *rawBody = response.rawBody;
           
           //              NSLog(@"%@",response.body.JSONObject);
           
-          if(error) {
-            NSString *errMsg = error.userInfo[@"NSLocalizedDescription"];
-            [callback onNetworkErrorWithNSString:errMsg];
-          } else if(code == 200){
-            [callback onSuccessWithRestResponse:(RestResponse *)response];
-          } else {
-            [callback onErrorWithRestResponse:(RestResponse *)response];
-          }
+          // if(error) {
+          //   NSString *errMsg = error.userInfo[@"NSLocalizedDescription"];
+          //   [callback onNetworkErrorWithNSString:errMsg];
+          // } else if(code == 200){
+          //   [callback onSuccessWithRestResponse:(RestResponse *)response];
+          // } else {
+          //   [callback onErrorWithRestResponse:(RestResponse *)response];
+          // }
           
-          // [self executeCallbackWithRestCallback:callback withInt:code withNSString:responseText];
+          NSString *responseText = response.body;
+
+          id<JavaUtilMap> headersMap = create_JavaUtilHashMap_init();
+          for (NSString *key in responseHeaders.allKeys) {
+              [headersMap putWithId:key withId:responseHeaders[key]];
+          }
+
+          [self executeCallbackWithRestCallback:callback withInt:code withNSString:responseText withJavaUtilMap:headersMap];
+
         }];
       } else if ([[[self getRequestMethod] getMethod] isEqualToString:@"DELETE"]) {
         [[UNIRest delete:^(UNISimpleRequest *request) {
           [request setUrl:[self getUrl]];
           [request setHeaders:headers];
           [request setParameters:parameterDictionary];
-        }] asJsonAsync:^(UNIHTTPJsonResponse* response, NSError *error) {
+        }] asStringAsync:^(UNIHTTPStringResponse* response, NSError *error) {
           // This is the asyncronous callback block
           NSInteger code = response.code;
           NSDictionary *responseHeaders = response.headers;
-          UNIJsonNode *body = response.body;
-          NSData *rawBody = response.rawBody;
+          // UNIJsonNode *body = response.body;
+          // NSData *rawBody = response.rawBody;
           
           //              NSLog(@"%@",response.body.JSONObject);
           
-          if(error) {
-            NSString *errMsg = error.userInfo[@"NSLocalizedDescription"];
-            [callback onNetworkErrorWithNSString:errMsg];
-          } else if(code == 200){
-            [callback onSuccessWithRestResponse:(RestResponse *)response];
-          } else {
-            [callback onErrorWithRestResponse:(RestResponse *)response];
-          }
+          // if(error) {
+          //   NSString *errMsg = error.userInfo[@"NSLocalizedDescription"];
+          //   [callback onNetworkErrorWithNSString:errMsg];
+          // } else if(code == 200){
+          //   [callback onSuccessWithRestResponse:(RestResponse *)response];
+          // } else {
+          //   [callback onErrorWithRestResponse:(RestResponse *)response];
+          // }
           
-          // [self executeCallbackWithRestCallback:callback withInt:code withNSString:responseText];
+          NSString *responseText = response.body;
+
+          id<JavaUtilMap> headersMap = create_JavaUtilHashMap_init();
+          for (NSString *key in responseHeaders.allKeys) {
+              [headersMap putWithId:key withId:responseHeaders[key]];
+          }
+
+          [self executeCallbackWithRestCallback:callback withInt:code withNSString:responseText withJavaUtilMap:headersMap];
+
         }];
 
       }  

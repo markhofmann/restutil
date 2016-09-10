@@ -22,11 +22,28 @@ public class IOSRestRequest extends BaseRestRequest {
         super(requestMethod, urll, restUtil);
     }
 
-    public native void makeRequest() /*-[
+    /*-[ - (void)makeRequest:(UNISimpleRequest *)request params:(NSDictionary *)params headers:(NSDictionary *)headers{
 
-        [request setUrl:[self getUrl]];
-        [request setHeaders:headerDictionary];
-        [request setParameters:parameterDictionary];
+          [request setUrl:[self getUrl]];
+          [request setHeaders:headers];
+          [request setParameters:params];
+        }
+    ]-*/;
+
+    /*-[ - (void)makeResponse:(UNIHTTPStringResponse*) response callback:(id<RestCallback>) callback {
+
+          NSInteger code = response.code;
+          NSDictionary *responseHeaders = response.headers;
+          
+          NSString *responseText = response.body;
+
+          id<JavaUtilMap> headersMap = create_JavaUtilHashMap_init();
+          for (NSString *key in responseHeaders.allKeys) {
+              [headersMap putWithId:key withId:responseHeaders[key]];
+          }
+
+          [self executeCallbackWithRestCallback:callback withInt:code withNSString:responseText withJavaUtilMap:headersMap];
+        }
     ]-*/;
 
     /**
@@ -67,140 +84,32 @@ public class IOSRestRequest extends BaseRestRequest {
           [parameterDictionary setObject:url forKey:@"fileUpload"];
       }
 
-      NSLog(@"params: %@",parameterDictionary);
-      NSLog(@"headers: %@",headerDictionary);
+      // NSLog(@"params: %@",parameterDictionary);
+      // NSLog(@"headers: %@",headerDictionary);
 
       if ([[[self getRequestMethod] getMethod] isEqualToString:@"GET"]) {
         [[UNIRest get:^(UNISimpleRequest *request) {
-          [request setUrl:[self getUrl]];
-          [request setHeaders:headerDictionary];
-          [request setParameters:parameterDictionary];
+          [self makeRequest:request params:parameterDictionary headers:headerDictionary];
         }] asStringAsync:^(UNIHTTPStringResponse* response, NSError *error) {
-          // This is the asyncronous callback block
-          NSInteger code = response.code;
-          NSDictionary *responseHeaders = response.headers;
-          // UNIJsonNode *body = response.body;
-          // NSData *rawBody = response.rawBody;
-          
-          //              NSLog(@"%@",response.body.JSONObject);
-          
-          // if(error) {
-          //   NSString *errMsg = error.userInfo[@"NSLocalizedDescription"];
-          //   [callback onNetworkErrorWithNSString:errMsg];
-          // } else if(code == 200){
-          //   [callback onSuccessWithRestResponse:(RestResponse *)response];
-          // } else {
-          //   [callback onErrorWithRestResponse:(RestResponse *)response];
-          // }
-          
-          NSString *responseText = response.body;
-
-          id<JavaUtilMap> headersMap = create_JavaUtilHashMap_init();
-          for (NSString *key in responseHeaders.allKeys) {
-              [headersMap putWithId:key withId:responseHeaders[key]];
-          }
-
-          [self executeCallbackWithRestCallback:callback withInt:code withNSString:responseText withJavaUtilMap:headersMap];
-
+          [self makeResponse:response callback:callback];
         }];
       } else if ([[[self getRequestMethod] getMethod] isEqualToString:@"POST"]) {
         [[UNIRest post:^(UNISimpleRequest *request) {
-          [request setUrl:[self getUrl]];
-          [request setHeaders:headerDictionary];
-          [request setParameters:parameterDictionary];
+          [self makeRequest:request params:parameterDictionary headers:headerDictionary];
         }] asStringAsync:^(UNIHTTPStringResponse* response, NSError *error) {
-          // This is the asyncronous callback block
-          NSInteger code = response.code;
-          NSDictionary *responseHeaders = response.headers;
-          // UNIJsonNode *body = response.body;
-          // NSData *rawBody = response.rawBody;
-          
-          //              NSLog(@"%@",response.body.JSONObject);
-          
-          // if(error) {
-          //   NSString *errMsg = error.userInfo[@"NSLocalizedDescription"];
-          //   [callback onNetworkErrorWithNSString:errMsg];
-          // } else if(code == 200){
-          //   [callback onSuccessWithRestResponse:(RestResponse *)response];
-          // } else {
-          //   [callback onErrorWithRestResponse:(RestResponse *)response];
-          // }
-
-          NSString *responseText = response.body;
-
-          id<JavaUtilMap> headersMap = create_JavaUtilHashMap_init();
-          for (NSString *key in responseHeaders.allKeys) {
-              [headersMap putWithId:key withId:responseHeaders[key]];
-          }
-
-          [self executeCallbackWithRestCallback:callback withInt:code withNSString:responseText withJavaUtilMap:headersMap];
-
+          [self makeResponse:response callback:callback];
         }];
       } else if ([[[self getRequestMethod] getMethod] isEqualToString:@"PUT"]) {
         [[UNIRest put:^(UNISimpleRequest *request) {
-          [request setUrl:[self getUrl]];
-          [request setHeaders:headerDictionary];
-          [request setParameters:parameterDictionary];
+          [self makeRequest:request params:parameterDictionary headers:headerDictionary];
         }] asStringAsync:^(UNIHTTPStringResponse* response, NSError *error) {
-          // This is the asyncronous callback block
-          NSInteger code = response.code;
-          NSDictionary *responseHeaders = response.headers;
-          // UNIJsonNode *body = response.body;
-          // NSData *rawBody = response.rawBody;
-          
-          //              NSLog(@"%@",response.body.JSONObject);
-          
-          // if(error) {
-          //   NSString *errMsg = error.userInfo[@"NSLocalizedDescription"];
-          //   [callback onNetworkErrorWithNSString:errMsg];
-          // } else if(code == 200){
-          //   [callback onSuccessWithRestResponse:(RestResponse *)response];
-          // } else {
-          //   [callback onErrorWithRestResponse:(RestResponse *)response];
-          // }
-          
-          NSString *responseText = response.body;
-
-          id<JavaUtilMap> headersMap = create_JavaUtilHashMap_init();
-          for (NSString *key in responseHeaders.allKeys) {
-              [headersMap putWithId:key withId:responseHeaders[key]];
-          }
-
-          [self executeCallbackWithRestCallback:callback withInt:code withNSString:responseText withJavaUtilMap:headersMap];
-
+          [self makeResponse:response callback:callback];
         }];
       } else if ([[[self getRequestMethod] getMethod] isEqualToString:@"DELETE"]) {
         [[UNIRest delete:^(UNISimpleRequest *request) {
-          [request setUrl:[self getUrl]];
-          [request setHeaders:headerDictionary];
-          [request setParameters:parameterDictionary];
+          [self makeRequest:request params:parameterDictionary headers:headerDictionary];
         }] asStringAsync:^(UNIHTTPStringResponse* response, NSError *error) {
-          // This is the asyncronous callback block
-          NSInteger code = response.code;
-          NSDictionary *responseHeaders = response.headers;
-          // UNIJsonNode *body = response.body;
-          // NSData *rawBody = response.rawBody;
-          
-          //              NSLog(@"%@",response.body.JSONObject);
-          
-          // if(error) {
-          //   NSString *errMsg = error.userInfo[@"NSLocalizedDescription"];
-          //   [callback onNetworkErrorWithNSString:errMsg];
-          // } else if(code == 200){
-          //   [callback onSuccessWithRestResponse:(RestResponse *)response];
-          // } else {
-          //   [callback onErrorWithRestResponse:(RestResponse *)response];
-          // }
-          
-          NSString *responseText = response.body;
-
-          id<JavaUtilMap> headersMap = create_JavaUtilHashMap_init();
-          for (NSString *key in responseHeaders.allKeys) {
-              [headersMap putWithId:key withId:responseHeaders[key]];
-          }
-
-          [self executeCallbackWithRestCallback:callback withInt:code withNSString:responseText withJavaUtilMap:headersMap];
-
+          [self makeResponse:response callback:callback];
         }];
 
       }  

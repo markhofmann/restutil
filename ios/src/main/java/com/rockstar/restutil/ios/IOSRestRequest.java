@@ -30,6 +30,14 @@ public class IOSRestRequest extends BaseRestRequest {
         }
     ]-*/;
 
+    /*-[ - (void)makeBodyRequest:(UNIBodyRequest *)request headers:(NSDictionary *)headers{
+
+          [request setUrl:[self getUrl]];
+          [request setHeaders:headers];
+          [request setBody:[body_ dataUsingEncoding:NSUTF8StringEncoding]];
+        }
+    ]-*/;
+
     /*-[ - (void)makeResponse:(UNIHTTPStringResponse*) response callback:(id<RestCallback>) callback {
 
           NSInteger code = response.code;
@@ -52,16 +60,8 @@ public class IOSRestRequest extends BaseRestRequest {
      */
     @Override
     public native <T, E> void execute(RestCallback<T, E> callback) /*-[
-      // NSDictionary* headers = @{@"accept": @"application/json"};
-      //NSDictionary* parameters = @{@"origin": @"35.776,51.464", @"destination": @"35.782776,51.433414"};
-      
-      // UNIHTTPJsonResponse *response = [[UNIRest get:^(UNISimpleRequest *request) {
-      //     [request setUrl:@"https://maps.googleapis.com/maps/api/directions/json"];
-      //     [request setHeaders:headers];
-      //     [request setParameters:parameters];
-      // }] asJson];
 
-      // Translate headers to NSDictionary
+      //Translate headers_ to NSDictionary
       JavaUtilHashMap *headerMap = [[JavaUtilHashMap alloc] initWithJavaUtilMap:headers_];
       NSMutableDictionary *headerDictionary = [[NSMutableDictionary alloc] init];
       id <JavaUtilIterator> iterator = [headerMap newKeyIterator];
@@ -84,36 +84,58 @@ public class IOSRestRequest extends BaseRestRequest {
           [parameterDictionary setObject:url forKey:@"fileUpload"];
       }
 
-      // NSLog(@"params: %@",parameterDictionary);
-      // NSLog(@"headers: %@",headerDictionary);
+      // NSLog(@"PARAMS: %@",parameterDictionary);
+      // NSLog(@"HEADERS: %@",headerDictionary);
 
-      if ([[[self getRequestMethod] getMethod] isEqualToString:@"GET"]) {
-        [[UNIRest get:^(UNISimpleRequest *request) {
-          [self makeRequest:request params:parameterDictionary headers:headerDictionary];
-        }] asStringAsync:^(UNIHTTPStringResponse* response, NSError *error) {
-          [self makeResponse:response callback:callback];
-        }];
-      } else if ([[[self getRequestMethod] getMethod] isEqualToString:@"POST"]) {
-        [[UNIRest post:^(UNISimpleRequest *request) {
-          [self makeRequest:request params:parameterDictionary headers:headerDictionary];
-        }] asStringAsync:^(UNIHTTPStringResponse* response, NSError *error) {
-          [self makeResponse:response callback:callback];
-        }];
-      } else if ([[[self getRequestMethod] getMethod] isEqualToString:@"PUT"]) {
-        [[UNIRest put:^(UNISimpleRequest *request) {
-          [self makeRequest:request params:parameterDictionary headers:headerDictionary];
-        }] asStringAsync:^(UNIHTTPStringResponse* response, NSError *error) {
-          [self makeResponse:response callback:callback];
-        }];
-      } else if ([[[self getRequestMethod] getMethod] isEqualToString:@"DELETE"]) {
-        [[UNIRest delete:^(UNISimpleRequest *request) {
-          [self makeRequest:request params:parameterDictionary headers:headerDictionary];
-        }] asStringAsync:^(UNIHTTPStringResponse* response, NSError *error) {
-          [self makeResponse:response callback:callback];
-        }];
+      if(body_ == nil || [body_ isEqual:[NSNull null]] || body_.length == 0 || [body_ isEqualToString:@"null"]) { //This might be overkill
+        // NSLog(@"NO BODY");
+        if ([[[self getRequestMethod] getMethod] isEqualToString:@"GET"]) {
+          [[UNIRest get:^(UNISimpleRequest *request) {
+            [self makeRequest:request params:parameterDictionary headers:headerDictionary];
+          }] asStringAsync:^(UNIHTTPStringResponse* response, NSError *error) {
+            [self makeResponse:response callback:callback];
+          }];
+        } else if ([[[self getRequestMethod] getMethod] isEqualToString:@"POST"]) {
+          [[UNIRest post:^(UNISimpleRequest *request) {
+            [self makeRequest:request params:parameterDictionary headers:headerDictionary];
+          }] asStringAsync:^(UNIHTTPStringResponse* response, NSError *error) {
+            [self makeResponse:response callback:callback];
+          }];
+        } else if ([[[self getRequestMethod] getMethod] isEqualToString:@"PUT"]) {
+          [[UNIRest put:^(UNISimpleRequest *request) {
+            [self makeRequest:request params:parameterDictionary headers:headerDictionary];
+          }] asStringAsync:^(UNIHTTPStringResponse* response, NSError *error) {
+            [self makeResponse:response callback:callback];
+          }];
+        } else if ([[[self getRequestMethod] getMethod] isEqualToString:@"DELETE"]) {
+          [[UNIRest delete:^(UNISimpleRequest *request) {
+            [self makeRequest:request params:parameterDictionary headers:headerDictionary];
+          }] asStringAsync:^(UNIHTTPStringResponse* response, NSError *error) {
+            [self makeResponse:response callback:callback];
+          }];
+        }  
+      } else {
+        // NSLog(@"HAS BODY %@",body_);
+        if ([[[self getRequestMethod] getMethod] isEqualToString:@"POST"]) {
+          [[UNIRest postEntity:^(UNIBodyRequest *request) {
+            [self makeBodyRequest:request headers:headerDictionary];
+          }] asStringAsync:^(UNIHTTPStringResponse* response, NSError *error) {
+            [self makeResponse:response callback:callback];
+          }];
+        } else if ([[[self getRequestMethod] getMethod] isEqualToString:@"PUT"]) {
+          [[UNIRest putEntity:^(UNIBodyRequest *request) {
+            [self makeBodyRequest:request headers:headerDictionary];
+          }] asStringAsync:^(UNIHTTPStringResponse* response, NSError *error) {
+            [self makeResponse:response callback:callback];
+          }];
+        } else if ([[[self getRequestMethod] getMethod] isEqualToString:@"DELETE"]) {
+          [[UNIRest deleteEntity:^(UNIBodyRequest *request) {
+            [self makeBodyRequest:request headers:headerDictionary];
+          }] asStringAsync:^(UNIHTTPStringResponse* response, NSError *error) {
+            [self makeResponse:response callback:callback];
+          }];
+        }
+      }
 
-      }  
-            
-            
-        ]-*/;
+    ]-*/;
 }

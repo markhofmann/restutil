@@ -101,7 +101,7 @@ public class AndroidRestRequest extends BaseRestRequest {
     private class VolleyErrorListener<T, E> implements Response.ErrorListener {
         private final RestCallback<T, E> callback;
 
-        public VolleyErrorListener(RestCallback<T, E> callback) {
+        VolleyErrorListener(RestCallback<T, E> callback) {
             this.callback = callback;
         }
 
@@ -111,11 +111,19 @@ public class AndroidRestRequest extends BaseRestRequest {
             val message = error.getMessage();
             Log.e(TAG, "got error message: " + (networkResponse == null ?
                 message :
-                message + "\n" + networkResponse.toString()));
+                message + " , network response: " + networkResponse.statusCode));
             if (networkResponse == null || error instanceof NetworkError) {
                 executeCallback(callback, -1, error.getMessage());
             } else {
-                executeCallback(callback, networkResponse.statusCode, error.getMessage(), networkResponse.headers);
+                String responseText;
+                try {
+                    responseText = new String(networkResponse.data, "UTF-8");
+                    Log.e(TAG, "error response: " + responseText);
+                } catch (Exception e) {
+                    Log.e(TAG, "could not read response data");
+                    responseText = "ERROR";
+                }
+                executeCallback(callback, networkResponse.statusCode, responseText, networkResponse.headers);
             }
         }
     }
@@ -124,7 +132,7 @@ public class AndroidRestRequest extends BaseRestRequest {
     private class VolleySuccessListener<T, E> implements Response.Listener<JsonResponse> {
         private final RestCallback<T, E> callback;
 
-        public VolleySuccessListener(RestCallback<T, E> callback) {
+        VolleySuccessListener(RestCallback<T, E> callback) {
             this.callback = callback;
         }
 

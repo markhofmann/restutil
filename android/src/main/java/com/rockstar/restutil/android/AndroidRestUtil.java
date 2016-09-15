@@ -6,6 +6,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.rockstar.restutil.common.BaseRestUtil;
 import com.rockstar.restutil.common.RestRequest;
 
@@ -35,7 +36,9 @@ public class AndroidRestUtil extends BaseRestUtil {
      */
     public AndroidRestUtil(Context context) {
         this.requestQueue = Volley.newRequestQueue(context);
-        this.gson = new Gson();
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        this.gson = gsonBuilder.create();
     }
 
     //    @Override

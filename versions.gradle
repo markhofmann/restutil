@@ -5,7 +5,7 @@ ext.versions = [
 
         j2objcAnnotations    : '1.1',
 
-        restutil             : '0.2.2-SNAPSHOT',
+        restutil             : '0.2.3-SNAPSHOT',
 
         android              : '4.1.1.4',
 

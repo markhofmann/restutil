@@ -1,6 +1,7 @@
 package com.rockstar.restutil.ios;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.j2objc.annotations.ObjectiveCName;
 import com.rockstar.restutil.common.BaseRestUtil;
 import com.rockstar.restutil.common.RestRequest;
@@ -11,6 +12,13 @@ import com.rockstar.restutil.common.RestUtil;
  */
 @ObjectiveCName("IOSRestUtil")
 public class IOSRestUtil extends BaseRestUtil implements RestUtil {
+    private Gson gson;
+
+    public IOSRestUtil() {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        this.gson = gsonBuilder.create();
+    }
 
     @Override
     protected RestRequest getRestRequestImpl(RestRequest.RequestMethod method, String urlStr) {
@@ -19,12 +27,12 @@ public class IOSRestUtil extends BaseRestUtil implements RestUtil {
 
     @Override
     public <T> T getObject(String json, Class<T> type) {
-        return new Gson().fromJson(json, type);
+        return gson.fromJson(json, type);
     }
 
     @Override
     public <D> String getJson(D data) {
-        return new Gson().toJson(data);
+        return gson.toJson(data);
     }
 
 

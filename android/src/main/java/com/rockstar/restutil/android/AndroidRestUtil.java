@@ -81,7 +81,7 @@ public class AndroidRestUtil extends BaseRestUtil {
     @Override
     public <D> String getJson(D data) {
         if (data == null) {
-            Log.w(TAG, "data to be posted is null, returning null String");
+            Log.w(TAG, "data object to be serialized is null, returning null String");
             return null;
         }
         return gson.toJson(data);

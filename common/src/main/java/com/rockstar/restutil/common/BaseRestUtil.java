@@ -23,9 +23,15 @@ public abstract class BaseRestUtil implements RestUtil {
 
     @Override
     public <D, T, E> void post(String urlStr, String fileUri, D object, RestCallback<T, E> callback) {
-        Map<String, String> params = new HashMap<>();
+        Map<String, Object> params = new HashMap<>();
         params.put("json", getJson(object));
-        post(urlStr, fileUri, params, callback);
+        exec(RestRequest.RequestMethod.POST, urlStr, object, params, null, fileUri, callback);
+    }
+
+    @Override
+    public <D, T, E> void post(String urlStr, D body, Map<String, Object> parameters, Map<String, String> headers,
+        RestCallback<T, E> callback) {
+        exec(RestRequest.RequestMethod.POST, urlStr, body, parameters, headers, callback);
     }
 
     @Override
@@ -74,16 +80,11 @@ public abstract class BaseRestUtil implements RestUtil {
     }
 
     @Override
-    public <T, E> void get(String urlStr, Map<String, Object> parameters,
+    public <T, E> void get(String urlStr,
+        Map<String, Object> parameters,
         Map<String, String> headers,
         RestCallback<T, E> callback) {
         exec(RestRequest.RequestMethod.GET, urlStr, null, parameters, headers, callback);
-    }
-
-    @Override
-    public <D, T, E> void post(String urlStr, D body, Map<String, Object> parameters, Map<String, String> headers,
-        RestCallback<T, E> callback) {
-        exec(RestRequest.RequestMethod.POST, urlStr, body, parameters, headers, callback);
     }
 
     @Override

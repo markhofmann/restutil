@@ -14,6 +14,7 @@ import lombok.val;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Mark Hofmann (mark@mark-hofmann.de)
@@ -89,10 +90,9 @@ public class AndroidRestRequest extends BaseRestRequest {
                 new VolleyRequest(getVolleyRequestMethod(), getUrl(), getBody(), stringParams, headers,
                     successListener, errorListener);
         }
-        // see http://stackoverflow.com/questions/17094718/change-volley-timeout-duration
         request.setRetryPolicy(new DefaultRetryPolicy(
-            5000,
-            1, // DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+            (int) TimeUnit.SECONDS.toMillis(10), // 10 second timeout
+            0, // don't retry
             DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         ((AndroidRestUtil) restUtil).getRequestQueue().add(request);

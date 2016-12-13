@@ -51,9 +51,9 @@ public class AndroidRestRequest extends BaseRestRequest {
 
     @Override
     public <T, E> void execute(final RestCallback<T, E> callback) {
-        Map<String, String> stringParams = new HashMap<>();
+        val stringParams = new HashMap<String, String>();
 
-        Map<String, Object> params = getParameters();
+        val params = getParameters();
         if (params != null) {
             for (Map.Entry<String, Object> entry : params.entrySet()) {
                 Object value = entry.getValue();
@@ -71,15 +71,16 @@ public class AndroidRestRequest extends BaseRestRequest {
             }
         }
         Request request;
-        Map<String, String> headers = getHeaders();
-        String fileUri = getFileUri();
+        val headers = getHeaders();
+        val fileUri = getFileUri();
         val restUtil = getRestUtil();
-        VolleySuccessListener<T, E> successListener = new VolleySuccessListener<>(callback);
-        VolleyErrorListener<T, E> errorListener = new VolleyErrorListener<>(callback);
+        val successListener = new VolleySuccessListener<T, E>(callback);
+        val errorListener = new VolleyErrorListener<T, E>(callback);
         if (fileUri != null) {
+            // TODO refactor to use URI instead of String
             val file = new File(fileUri);
             request = new MultipartRequest(getUrl(), headers, successListener, errorListener);
-            MultipartRequest multipartRequest = ((MultipartRequest) request);
+            val multipartRequest = ((MultipartRequest) request);
             multipartRequest.addFilePart("fileUpload", file, file.getName());
             for (Map.Entry<String, String> entry : stringParams.entrySet()) {
                 multipartRequest.addTextPart(entry.getKey(), entry.getValue());

@@ -12,6 +12,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.rockstar.restutil.common.RestConstants.DEFAULT_ENCODING;
+
 /**
  * @author Mark Hofmann (mark@mark-hofmann.de)
  */
@@ -38,7 +40,8 @@ public class VolleyRequest extends Request<JsonResponse> {
 
     @Override
     public String getBodyContentType() {
-        return "application/json; charset=" + super.getParamsEncoding();
+        // application/json is unicode (either utf-8, 16 or 32) by default
+        return "application/json";
     }
 
     @Override
@@ -54,9 +57,9 @@ public class VolleyRequest extends Request<JsonResponse> {
     public byte[] getBody() throws AuthFailureError {
         if (body != null) {
             try {
-                return body.getBytes(super.getParamsEncoding());
+                return body.getBytes(DEFAULT_ENCODING);
             } catch (UnsupportedEncodingException e) {
-                throw new RuntimeException("UTF-8 == unknown encoding???", e);
+                throw new RuntimeException(DEFAULT_ENCODING + " = unknown encoding???", e);
             }
         } else {
             return super.getBody();
@@ -81,9 +84,9 @@ public class VolleyRequest extends Request<JsonResponse> {
         Log.d(TAG, "recieved response:" + response);
         String parsed;
         try {
-            parsed = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
+            parsed = new String(response.data, DEFAULT_ENCODING);
         } catch (UnsupportedEncodingException e) {
-            parsed = new String(response.data);
+            throw new RuntimeException(DEFAULT_ENCODING + " = unknown encoding???", e);
         }
         return Response
             .success(new JsonResponse(parsed, response.headers), HttpHeaderParser.parseCacheHeaders(response));

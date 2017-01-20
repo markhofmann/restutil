@@ -87,8 +87,12 @@ public class AndroidRestRequest extends BaseRestRequest {
             }
             multipartRequest.endParts();
         } else {
+            String url = getUrl();
+            if (getRequestMethod() == RequestMethod.GET && !stringParams.isEmpty()) {
+                url = url + "?" + getParams(stringParams);
+            }
             request =
-                new VolleyRequest(getVolleyRequestMethod(), getUrl(), getBody(), stringParams, headers,
+                new VolleyRequest(getVolleyRequestMethod(), url, getBody(), stringParams, headers,
                     successListener, errorListener);
         }
         request.setRetryPolicy(new DefaultRetryPolicy(
@@ -97,6 +101,24 @@ public class AndroidRestRequest extends BaseRestRequest {
             DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         ((AndroidRestUtil) restUtil).getRequestQueue().add(request);
+    }
+
+    private String getParams(Map<String, String> paramMap) {
+        //        List<NameValuePair> list = new ArrayList<>();
+        //        for (Map.Entry<String, String> entry : paramMap.entrySet()) {
+        //            list.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
+        //        }
+        //        return URLEncodedUtils.format(list, "UTF-8");
+
+        // TODO: add URL encoding!
+        StringBuilder b = new StringBuilder();
+        for (Map.Entry<String, String> entry : paramMap.entrySet()) {
+            if (b.length() > 0) {
+                b.append('&');
+            }
+            b.append(entry.getKey()).append('=').append(entry.getValue());
+        }
+        return b.toString();
     }
 
     private class VolleyErrorListener<T, E> implements Response.ErrorListener {

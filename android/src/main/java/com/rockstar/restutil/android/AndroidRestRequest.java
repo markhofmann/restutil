@@ -8,6 +8,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.rockstar.restutil.common.BaseRestRequest;
 import com.rockstar.restutil.common.RestCallback;
+import com.rockstar.restutil.common.RestRequest;
 import com.rockstar.restutil.common.RestUtil;
 import lombok.val;
 
@@ -75,7 +76,7 @@ public class AndroidRestRequest extends BaseRestRequest {
         val fileUri = getFileUri();
         val restUtil = getRestUtil();
         val successListener = new VolleySuccessListener<T, E>(callback);
-        val errorListener = new VolleyErrorListener<T, E>(callback);
+        val errorListener = new VolleyErrorListener<T, E>(this, callback);
         if (fileUri != null) {
             // TODO refactor to use URI instead of String
             val file = new File(fileUri);
@@ -123,18 +124,22 @@ public class AndroidRestRequest extends BaseRestRequest {
 
     private class VolleyErrorListener<T, E> implements Response.ErrorListener {
         private final RestCallback<T, E> callback;
+        private final RestRequest request;
 
-        VolleyErrorListener(RestCallback<T, E> callback) {
+        VolleyErrorListener(RestRequest request, RestCallback<T, E> callback) {
             this.callback = callback;
+            this.request = request;
         }
 
         @Override
         public void onErrorResponse(VolleyError error) {
             val networkResponse = error.networkResponse;
             val message = error.getMessage();
-            Log.e(TAG, "got error message: " + (networkResponse == null ?
-                message :
-                message + " , network response: " + networkResponse.statusCode));
+
+            Log.e(TAG, "request " + getRequestMethod().getMethod() + " " + request.getUrl() + " failed with error: " + (
+                networkResponse == null ?
+                    message :
+                    message + " , network response: " + networkResponse.statusCode));
             if (networkResponse == null || error instanceof NetworkError) {
                 executeCallback(callback, -1, error.getMessage());
             } else {

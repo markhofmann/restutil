@@ -59,6 +59,7 @@ public interface RestRequest {
      */
     void addHeader(String name, String value);
 
+    String getUrl();
 
     /**
      * Executes the current request and calls the given callback depending on the result.

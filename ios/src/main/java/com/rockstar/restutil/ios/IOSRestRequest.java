@@ -25,24 +25,24 @@ public class IOSRestRequest extends BaseRestRequest {
 
     /*-[ - (void)makeResponse:(NSURLSessionTask*)task withResponse:(id)response callback:(id<RestCallback>) callback {
 
-            NSHTTPURLResponse* r = (NSHTTPURLResponse*)task.response;
+          NSHTTPURLResponse* r = (NSHTTPURLResponse*)task.response;
 
-            NSInteger code = r.statusCode;
-            NSDictionary *responseHeaders = r.allHeaderFields;
+          NSInteger code = r.statusCode;
+          NSDictionary *responseHeaders = r.allHeaderFields;
 
-            NSError *err;
-            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:response options:0 error:&err];
-            NSString *bodyString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+          NSError *err;
+          NSData *jsonData = [NSJSONSerialization dataWithJSONObject:response options:0 error:&err];
+          NSString *bodyString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 
-            NSString *responseText = bodyString;
+          NSString *responseText = bodyString;
 
-            id<JavaUtilMap> headersMap = create_JavaUtilHashMap_init();
-            for (NSString *key in responseHeaders.allKeys) {
-                [headersMap putWithId:key withId:responseHeaders[key]];
-            }
+          id<JavaUtilMap> headersMap = create_JavaUtilHashMap_init();
+          for (NSString *key in responseHeaders.allKeys) {
+            [headersMap putWithId:key withId:responseHeaders[key]];
+          }
 
-            [self executeCallbackWithRestCallback:callback withInt:code withNSString:responseText
-            withJavaUtilMap:headersMap];
+          [self executeCallbackWithRestCallback:callback withInt:code withNSString:responseText
+          withJavaUtilMap:headersMap];
 
         }
 
@@ -55,129 +55,121 @@ public class IOSRestRequest extends BaseRestRequest {
     @Override
     public native <T, E> void execute(RestCallback<T, E> callback) /*-[
 
-          //Translate headers_ to NSDictionary
-          JavaUtilHashMap *headerMap = [[JavaUtilHashMap alloc] initWithJavaUtilMap:headers_];
-          NSMutableDictionary *headerDictionary = [[NSMutableDictionary alloc] init];
-          id <JavaUtilIterator> iterator = [headerMap newKeyIterator];
-          while ([iterator hasNext]) {
-            id object = [iterator next];
-            [headerDictionary setObject:[headerMap getWithId:object] forKey:object];
+      //Translate headers_ to NSDictionary
+      JavaUtilHashMap *headerMap = [[JavaUtilHashMap alloc] initWithJavaUtilMap:headers_];
+      NSMutableDictionary *headerDictionary = [[NSMutableDictionary alloc] init];
+      id <JavaUtilIterator> iterator = [headerMap newKeyIterator];
+      while ([iterator hasNext]) {
+        id object = [iterator next];
+        [headerDictionary setObject:[headerMap getWithId:object] forKey:object];
+      }
+
+      //Translate parameters_ to NSDictionary
+      JavaUtilHashMap *parameterMap = [[JavaUtilHashMap alloc] initWithJavaUtilMap:parameters_];
+      NSMutableDictionary *parameterRequest = [[NSMutableDictionary alloc] init];
+      iterator = [parameterMap newKeyIterator];
+      while ([iterator hasNext]) {
+        id object = [iterator next];
+        [parameterRequest setObject:[parameterMap getWithId:object] forKey:object];
+      }
+
+      if ([self getFileUri]) {
+        NSURL *url = [NSURL fileURLWithPath:[self getFileUri]];
+        [parameterRequest setObject:url forKey:@"fileUpload"];
+      }
+
+      AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] init];
+
+      manager.requestSerializer = [AFJSONRequestSerializer serializer];
+
+      for (NSString *headerKey in headerDictionary) {
+          [manager.requestSerializer setValue:[headerDictionary objectForKey:headerKey]
+                             forHTTPHeaderField:headerKey];
+      }
+
+
+
+      if(body_ != nil || ![body_ isEqual:[NSNull null]] || body_.length != 0 || ![body_ isEqualToString:@"null"]) {
+
+          NSString *jsonString = body_;
+          NSData *data = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+          id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+
+          if ([json isKindOfClass:[NSArray class]]) {
+
+              parameterRequest = json;
+
+          } else {
+              for (NSString *parametersKey in json) {
+                  [parameterRequest setObject:[json objectForKey:parametersKey] forKey:parametersKey];
+              }
           }
 
-          //Translate parameters_ to NSDictionary
-          JavaUtilHashMap *parameterMap = [[JavaUtilHashMap alloc] initWithJavaUtilMap:parameters_];
-          NSMutableDictionary *parameterDictionary = [[NSMutableDictionary alloc] init];
-          iterator = [parameterMap newKeyIterator];
-          while ([iterator hasNext]) {
-            id object = [iterator next];
-            [parameterDictionary setObject:[parameterMap getWithId:object] forKey:object];
-          }
 
-          if ([self getFileUri]) {
-            NSURL *url = [NSURL fileURLWithPath:[self getFileUri]];
-            [parameterDictionary setObject:url forKey:@"fileUpload"];
-          }
+      }
 
-          // NSLog(@"PARAMS: %@",parameterDictionary);
-          // NSLog(@"HEADERS: %@",headerDictionary);
+        // This might be overkill
+        // NSLog(@"NO BODY");
 
-          if(body_ == nil || [body_ isEqual:[NSNull null]] || body_.length == 0 || [body_ isEqualToString:@"null"]) {
-           // This might be overkill
-           // NSLog(@"NO BODY");
+        if ([[[self getRequestMethod] getMethod] isEqualToString:@"GET"]) {
 
+            [manager GET:[self getUrl] parameters:parameterRequest progress:nil success:^(NSURLSessionTask
+                                                                                             *task, id
+                                                                                             responseObject) {
+
+                [self makeResponse:task withResponse:responseObject callback:callback];
+
+            } failure:^(NSURLSessionTask *operation, NSError *error) {
+
+                NSLog(@"Error GET %@", error);
+
+            }];
 
 
-          AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] init];
+        } else if ([[[self getRequestMethod] getMethod] isEqualToString:@"POST"]) {
 
-          manager.requestSerializer = [AFJSONRequestSerializer serializer];
+            [manager POST:[self getUrl] parameters:parameterRequest progress:^(NSProgress * _Nonnull
+                                                                                  uploadProgress) {
 
-          for (NSString *headerKey in headerDictionary) {
-              [manager.requestSerializer setValue:[headerDictionary objectForKey:headerKey]
-              forHTTPHeaderField:headerKey];
-          }
+            } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
 
-          if ([[[self getRequestMethod] getMethod] isEqualToString:@"GET"]) {
+                [self makeResponse:task withResponse:responseObject callback:callback];
 
-              [manager GET:[self getUrl] parameters:parameterDictionary progress:nil success:^(NSURLSessionTask
-              *task, id
-              responseObject) {
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
 
-                  [self makeResponse:task withResponse:responseObject callback:callback];
+                NSLog(@"Error POST %@", error);
 
-              } failure:^(NSURLSessionTask *operation, NSError *error) {
+            }];
 
-                  NSLog(@"Error GET %@", error);
+        } else if ([[[self getRequestMethod] getMethod] isEqualToString:@"PUT"]) {
 
-              }];
+            [manager PUT:[self getUrl] parameters:parameterRequest success:^(NSURLSessionDataTask * _Nonnull
+                                                                                task, id
+                                                                                _Nullable responseObject) {
 
+                [self makeResponse:task withResponse:responseObject callback:callback];
 
-          } else if ([[[self getRequestMethod] getMethod] isEqualToString:@"POST"]) {
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
 
-              [manager POST:[self getUrl] parameters:parameterDictionary progress:^(NSProgress * _Nonnull
-              uploadProgress) {
+                NSLog(@"Error PUT %@", error);
 
-              } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            }];
 
-                  [self makeResponse:task withResponse:responseObject callback:callback];
+        } else if ([[[self getRequestMethod] getMethod] isEqualToString:@"DELETE"]) {
 
-              } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            [manager DELETE:[self getUrl] parameters:parameterRequest success:^(NSURLSessionDataTask * _Nonnull
+                                                                                   task, id
+                                                                                   _Nullable responseObject) {
 
-                  NSLog(@"Error POST %@", error);
+                [self makeResponse:task withResponse:responseObject callback:callback];
 
-              }];
+            } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
 
-          } else if ([[[self getRequestMethod] getMethod] isEqualToString:@"PUT"]) {
+                NSLog(@"Error DELETE %@", error);
 
-              [manager PUT:[self getUrl] parameters:parameterDictionary success:^(NSURLSessionDataTask * _Nonnull
-              task, id
-              _Nullable responseObject) {
+            }];
 
-                  [self makeResponse:task withResponse:responseObject callback:callback];
-
-              } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-
-                  NSLog(@"Error PUT %@", error);
-
-              }];
-
-          } else if ([[[self getRequestMethod] getMethod] isEqualToString:@"DELETE"]) {
-
-              [manager DELETE:[self getUrl] parameters:parameterDictionary success:^(NSURLSessionDataTask * _Nonnull
-              task, id
-                _Nullable responseObject) {
-
-                  [self makeResponse:task withResponse:responseObject callback:callback];
-
-              } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-
-                  NSLog(@"Error DELETE %@", error);
-
-              }];
-
-          }
-
-        } else {
-        //  // NSLog(@"HAS BODY %@",body_);
-        //  if ([[[self getRequestMethod] getMethod] isEqualToString:@"POST"]) {
-        //    [[UNIRest postEntity:^(UNIBodyRequest *request) {
-        //      [self makeBodyRequest:request headers:headerDictionary];
-        //    }] asStringAsync:^(UNIHTTPStringResponse* response, NSError *error) {
-        //      [self makeResponse:response callback:callback];
-        //    }];
-        //  } else if ([[[self getRequestMethod] getMethod] isEqualToString:@"PUT"]) {
-        //    [[UNIRest putEntity:^(UNIBodyRequest *request) {
-        //      [self makeBodyRequest:request headers:headerDictionary];
-        //    }] asStringAsync:^(UNIHTTPStringResponse* response, NSError *error) {
-        //      [self makeResponse:response callback:callback];
-        //    }];
-        //  } else if ([[[self getRequestMethod] getMethod] isEqualToString:@"DELETE"]) {
-        //    [[UNIRest deleteEntity:^(UNIBodyRequest *request) {
-        //      [self makeBodyRequest:request headers:headerDictionary];
-        //    }] asStringAsync:^(UNIHTTPStringResponse* response, NSError *error) {
-        //      [self makeResponse:response callback:callback];
-        //    }];
-        //  }
         }
-
+      }
     ]-*/;
 }
